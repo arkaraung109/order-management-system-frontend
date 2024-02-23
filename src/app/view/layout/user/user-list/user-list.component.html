@@ -1,0 +1,63 @@
+<div style="width: 90%; margin: 0 auto;">
+  <mat-form-field appearance="outline" style="width: 200px; float: right;">
+    <mat-label>Role</mat-label>
+    <mat-select [(ngModel)]="searchedRole" (selectionChange)="search()">
+      <mat-option [value]="''">All Roles</mat-option>
+      <mat-option *ngFor="let role of roleList" [value]="role.name">{{ role.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div class="container-fluid mat-elevation-z8 responsive-container">
+    <div class="filter-search">
+      <mat-form-field appearance="outline" style="width: 200px">
+        <mat-label>Filter Search</mat-label>
+        <input type="text" matInput [(ngModel)]="searchedKeyword">
+        <button *ngIf="searchedKeyword" matSuffix mat-icon-button aria-label="Clear" (click)="searchedKeyword=''; search();">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <button mat-raised-button color="primary" class="search-btn text-white" type="button" (click)="search()">Search</button>
+    </div>
+    <table mat-table [dataSource]="dataSource" matSort class="w-100" >
+      <ng-container matColumnDef="index">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>No.</th>
+        <td mat-cell *matCellDef="let element">{{ element.index }}</td>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      </ng-container>
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+        <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+      </ng-container>
+      <ng-container matColumnDef="username">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Username</th>
+        <td mat-cell *matCellDef="let element">{{ element.username }}</td>
+      </ng-container>
+      <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Phone</th>
+        <td mat-cell *matCellDef="let element">{{ element.phone }}</td>
+      </ng-container>
+      <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Role</th>
+        <td mat-cell *matCellDef="let element">{{ element.role.name }}</td>
+      </ng-container>
+      <ng-container matColumnDef="creationTimestamp">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Creation At</th>
+        <td mat-cell *matCellDef="let element">{{ element.creationTimestamp | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
+      </ng-container>
+      <ng-container matColumnDef="active">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Account Status</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-slide-toggle class="example-margin" (change)="changeStatus(element.id)" [checked]="element.active"></mat-slide-toggle>
+        </td>
+      </ng-container>
+      <ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </ng-container>
+    </table>
+    <h5 *ngIf="totalElements == 0" class="text-danger text-center mb-3 mt-3">No record found!</h5>
+  </div>
+  <mat-paginator #paginator [length]="totalElements" [pageSizeOptions]="pageSizes" showFirstLastButtons></mat-paginator>
+</div>

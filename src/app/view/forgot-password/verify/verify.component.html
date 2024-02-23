@@ -1,0 +1,33 @@
+<div class="container-fluid min-vh-100 background-gradient m-0 p-0 d-flex align-items-center justify-content-center">
+  <div class="input-form p-5 col-lg-4 col-md-4 col-sm-6 col-xs-6">
+    <form [formGroup]="form" (ngSubmit)="submit()" accept-charset="utf-8" htmlEscape="true" enctype="multipart/form-data" method="POST">
+      <div>
+        <a routerLink="/auth" class="d-flex align-items-center">
+          <img src="assets/images/logo.png" alt="" width="125" height="81" class="mx-auto d-block">
+        </a>
+      </div>
+      <div class="text-center mb-20">
+        <span class="fs-17 logo-text">Global Generation Plastic</span>
+      </div>
+      <div class="text-center mb-20">
+        <h4 class="text-header" *ngIf="!sent">Forgot Password</h4>
+        <h4 class="text-header" *ngIf="sent">Password Reset Email is successfully sent. <br> Please check your mailbox.</h4>
+      </div>
+      <div class="p-4" *ngIf="!sent">
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+          <input type="text" matInput formControlName="username">
+        </mat-form-field>
+        <mat-error *ngIf="form.controls['username'].invalid && (form.controls['username'].touched || form.controls['username'].dirty || submitted)">
+          <span *ngIf="form.controls['username'].errors?.['required']" class="d-block">Field is required.</span>
+          <span *ngIf="form.controls['username'].errors?.['userNotFound']" class="d-block">User does not exist.</span>
+        </mat-error>
+        <button mat-raised-button color="accent" type="button" class="text-white float-end" routerLink="/auth">Back</button>
+        <button mat-raised-button color="primary" type="submit" class="text-white float-end me-2">Submit</button>
+      </div>
+      <div class="p-4 text-center" *ngIf="sent">
+        <button mat-raised-button color="accent" type="button" class="text-white" routerLink="/auth">Back</button>
+      </div>
+    </form>
+  </div>
+</div>

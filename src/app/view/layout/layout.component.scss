@@ -1,0 +1,58 @@
+@import "../../../assets/styles/_variables.scss";
+
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 200px;
+  background-image: linear-gradient(to bottom, #FDFCFB, #AEEFF5);
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+mat-expansion-panel {
+  background-color: transparent;
+}
+
+mat-expansion-panel-header {
+  padding: 16px;
+}
+
+.active-link {
+  background-color: $info !important;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 4px;
+}
+
+.active-link .active-color {
+  color: $white !important;
+}
+
+.menu-shadow {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 4px;
+}
+
+.mat-toolbar {
+  background-image: linear-gradient(to right, #FDFCFB, #f7e5de);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.footer {
+  text-align: center;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  padding: 5px;
+  box-shadow: 0px -4px 3px rgba(0, 0, 0, 0.32);
+  background-image: linear-gradient(to right, #FDFCFB, #f7e5de);
+}

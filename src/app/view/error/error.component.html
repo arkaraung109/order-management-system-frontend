@@ -1,0 +1,19 @@
+<div class="container-fluid min-vh-100 background-gradient m-0 p-0 d-flex align-items-center justify-content-center">
+  <div class="input-form p-5 col-lg-5 col-md-5 col-sm-6 col-xs-6">
+      <div>
+        <a routerLink="/auth" class="d-flex align-items-center">
+          <img src="assets/images/logo.png" alt="" width="125" height="81" class="mx-auto d-block">
+        </a>
+      </div>
+      <div class="text-center mb-20">
+        <span class="fs-17 logo-text">Global Generation Plastic</span>
+      </div>
+      <div class="text-center mb-20">
+        <h4 class="text-header">Error Code: {{ errorCode }}</h4>
+        <h4 class="text-header">{{ errorMessage }}</h4>
+      </div>
+      <div class="p-4 text-center">
+        <button mat-raised-button color="accent" class="text-white" [routerLink]="returnRoute">Back</button>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+.load-container {
+  position: fixed;
+  width: 100%;
+  top: 50%;
+  z-index: 9999;
+}
+
+mat-spinner {
+  left: calc(50% - 35px);
+}

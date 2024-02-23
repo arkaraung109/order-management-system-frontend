@@ -1,0 +1,197 @@
+@import "./variables";
+@import "./global";
+@import "./mixins";
+@import "./core/app";
+@import './grid/grid';
+@import "./layouts/layouts";
+@import "./components/components";
+
+a.xng-breadcrumb-link {
+  text-decoration: underline;
+  color: rgb(133, 131, 131);
+}
+
+.xng-breadcrumb-trail {
+  font-weight: bold;
+}
+
+.xng-breadcrumb-root {
+  padding: 8px 16px;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #f7e3d4;
+  margin: 20px !important;
+}
+
+.mdc-text-field--outlined {
+  --mdc-outlined-text-field-focus-outline-color: rgba(0, 0, 0, 0.38);
+  //--mdc-outlined-text-field-focus-label-text-color: #f88254;
+  --mdc-outlined-text-field-caret-color: black;
+}
+
+.mat-mdc-progress-spinner {
+  --mdc-circular-progress-active-indicator-color: #03c9d7;
+}
+
+.mat-mdc-raised-button.mat-primary {
+  --mdc-protected-button-container-color: #03c9d7;
+}
+
+.mat-mdc-text-field-wrapper.mdc-text-field--outlined .mat-mdc-form-field-infix {
+  width: 30%;
+}
+
+.mat-mdc-paginator-container {
+  background-color: #fafafa;
+}
+
+.mat-mdc-select-value {
+  font-size: 14px !important;
+}
+
+.mat-mdc-icon-button.mat-mdc-button-base {
+  width: 40px;
+  height: 55px;
+  padding: 12px;
+}
+
+.mat-mdc-paginator-range-label {
+  font-size: 14px;
+}
+
+.mat-mdc-paginator-page-size-label {
+  font-size: 14px;
+}
+
+mat-paginator {
+  margin-top: 20px;
+  margin-bottom: 100px
+}
+
+.search-btn {
+  padding-top: 22px !important;
+  padding-bottom: 22px !important;
+  margin-left: 15px;
+}
+
+.responsive-container {
+  overflow: auto;
+  max-height: 410px;
+  background-color: white
+}
+
+.mat-mdc-paginator .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mat-mdc-form-field-infix {
+  padding-top: 16px;
+}
+
+.mat-sort-header-content {
+  font-weight: bold;
+}
+
+.mat-mdc-slide-toggle {
+  --mdc-switch-selected-track-color: #03c9d7;
+  --mdc-switch-selected-handle-color: #03c9d7;
+  --mdc-switch-selected-hover-track-color: #03c9d7;
+  --mdc-switch-selected-pressed-track-color: #03c9d7;
+  --mdc-switch-selected-focus-track-color: #03c9d7;
+  --mdc-switch-selected-focus-handle-color: #03c9d7;
+  --mdc-switch-selected-hover-handle-color: #03c9d7;
+  --mdc-switch-selected-focus-state-layer-color: #03c9d7;
+  --mdc-switch-selected-hover-state-layer-color: #03c9d7;
+  --mdc-switch-selected-pressed-state-layer-color: #03c9d7;
+  --mdc-switch-selected-pressed-handle-color: #03c9d7;
+}
+
+.text-header {
+  color: #f88254;
+  text-shadow: 1px 1px rgb(202, 192, 192);
+}
+
+.background-gradient {
+  background-image: linear-gradient(to right, #FDFCFB, #f7e5de);
+}
+
+.logo-text {
+  font-family: Comic Sans MS, Tahoma, sans-serif;
+}
+
+.filter-search {
+  margin-top: 15px;
+  margin-bottom: -15px;
+}
+
+mat-error {
+  margin-top: -45px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.input-form {
+  margin-bottom: 100px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.container-box {
+  width: 90%;
+  margin: 0 100px auto;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.button-group {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+}
+
+@media screen and (max-width: 600px) {
+  .input-form {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .input-form {
+    padding: 25px !important;
+  }
+}
+
+// Mat-Input On Focus
+.mdc-text-field--focused:not(.mdc-text-field-disabled) .mdc-floating-label {
+  font-size: 16px !important;
+  padding-right: 7px;
+}
+
+// Change Label Font Position
+.mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-floating-label {
+  top: 20px !important;
+  font-size: 14px;
+}
+
+// When Focus After Change Label Position
+.mat-mdc-form-field .mdc-text-field--outlined .mdc-notched-outline--upgraded .mdc-floating-label--float-above {
+  top: 28px !important;
+  position: relative !important;
+  padding-right: 7px;
+  //font-weight: 300 !important;
+  --mat-mdc-form-field-floating-label-scale: 0.8;
+}
+
+// Change Mat Input Height
+.mat-mdc-text-field-wrapper {
+  height: 45px !important;
+}
+
+// Change Mat Input Inside Input Text Position
+.mat-mdc-input-element {
+  top: 3px !important;
+  position: relative;
+}
+
+.mat-mdc-form-field-flex {
+  margin-top: -7px !important;
+}
+
+.mat-mdc-form-field-type-mat-select:not(.mat-form-field-disabled) .mdc-floating-label {
+  padding-right: 7px;
+}
+

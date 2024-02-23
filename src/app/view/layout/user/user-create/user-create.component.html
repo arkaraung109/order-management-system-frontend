@@ -1,0 +1,100 @@
+<div class="container-fluid m-0 p-0 d-flex align-items-center justify-content-center">
+  <div class="input-form p-5 col-lg-4 col-md-6 col-sm-7 col-xs-6">
+    <form [formGroup]="form" (ngSubmit)="create()" accept-charset="utf-8" htmlEscape="true" enctype="multipart/form-data" method="POST">
+      <div class="text-center mb-20">
+        <h4 class="text-header">System User Creation</h4>
+      </div>
+      <div class="p-4">
+        <!-- Name -->
+        <mat-form-field appearance="outline">
+          <mat-label>Full Name</mat-label>
+          <input type="text" matInput formControlName="name">
+        </mat-form-field>
+        <mat-error *ngIf="form.controls['name'].invalid && (form.controls['name'].touched || form.controls['name'].dirty || submitted)">
+          <span *ngIf="form.controls['name'].errors?.['required']" class="d-block">Field is required.</span>
+          <span *ngIf="form.controls['name'].errors?.['maxlength']" class="d-block">Must be at most 150 characters.</span>
+          <span *ngIf="form.controls['name'].errors?.['pattern']" class="d-block">Must not include special characters.</span>
+          <span *ngIf="form.controls['name'].errors?.['startWithSpace']" class="d-block">Must not start with space.</span>
+        </mat-error>
+        <!-- Email -->
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input type="text" matInput formControlName="email">
+        </mat-form-field>
+        <mat-error *ngIf="form.controls['email'].invalid && (form.controls['email'].touched || form.controls['email'].dirty || submitted)">
+          <span *ngIf="form.controls['email'].errors?.['required']" class="d-block">Field is required.</span>
+          <span *ngIf="form.controls['email'].errors?.['maxlength']" class="d-block">Must be at most 150 characters.</span>
+          <span *ngIf="form.controls['email'].errors?.['pattern']" class="d-block">Must match with valid email pattern.</span>
+          <span *ngIf="form.controls['email'].errors?.['startWithSpace']" class="d-block">Must not start with space.</span>
+          <span *ngIf="form.controls['email'].errors?.['containSpace']" class="d-block">Must not contain space between characters.</span>
+          <span *ngIf="form.controls['email'].errors?.['duplication']" class="d-block">User already exists with this email.</span>
+        </mat-error>
+        <!-- Phone -->
+        <mat-form-field appearance="outline">
+          <mat-label>Phone</mat-label>
+          <input type="text" matInput formControlName="phone">
+        </mat-form-field>
+        <mat-error *ngIf="form.controls['phone'].invalid && (form.controls['phone'].touched || form.controls['phone'].dirty || submitted)">
+          <span *ngIf="form.controls['phone'].errors?.['required']" class="d-block">Field is required.</span>
+          <span *ngIf="form.controls['phone'].errors?.['pattern']" class="d-block">Must match with valid phone pattern.</span>
+          <span *ngIf="form.controls['phone'].errors?.['startWithSpace']" class="d-block">Must not start with space.</span>
+        </mat-error>
+        <!-- Username -->
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+          <input type="text" matInput formControlName="username">
+        </mat-form-field>
+        <mat-error *ngIf="form.controls['username'].invalid && (form.controls['username'].touched || form.controls['username'].dirty || submitted)">
+          <span *ngIf="form.controls['username'].errors?.['required']" class="d-block">Field is required.</span>
+          <span *ngIf="form.controls['username'].errors?.['maxlength']" class="d-block">Must be at most 150 characters.</span>
+          <span *ngIf="form.controls['username'].errors?.['pattern']" class="d-block">Must match with valid username pattern.</span>
+          <span *ngIf="form.controls['username'].errors?.['startWithSpace']" class="d-block">Must not start with space.</span>
+          <span *ngIf="form.controls['username'].errors?.['containSpace']" class="d-block">Must not contain space between characters.</span>
+          <span *ngIf="form.controls['username'].errors?.['duplication']" class="d-block">User already exists with this username.</span>
+        </mat-error>
+        <!-- Role -->
+        <mat-form-field appearance="outline">
+          <mat-label>Role</mat-label>
+          <mat-select formControlName="role">
+            <mat-option>None</mat-option>
+            <mat-option *ngFor="let role of roleList" [value]="role.id">{{ role.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-error *ngIf="form.controls['role'].invalid && (form.controls['role'].touched || form.controls['role'].dirty || submitted)">
+          <span *ngIf="form.controls['role'].errors?.['required']" class="d-block">Field is required.</span>
+        </mat-error>
+        <!-- New Password -->
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input type="password" matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'">
+          <mat-icon matSuffix (click)="generateRandom()" style="padding-right: 5px;">refresh</mat-icon>
+          <mat-icon matSuffix (click)="hidePassword = !hidePassword" style="padding-left: 0px;">{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </mat-form-field>
+        <mat-error *ngIf="form.controls['password'].invalid && (form.controls['password'].touched || form.controls['password'].dirty || submitted)">
+          <span *ngIf="form.controls['password'].errors?.['required']" class="d-block">Field is required.</span>
+          <span *ngIf="form.controls['password'].errors?.['minlength']" class="d-block">Must be at least 8 characters.</span>
+          <span *ngIf="form.controls['password'].errors?.['maxlength']" class="d-block">Must be at most 30 characters.</span>
+          <span *ngIf="form.controls['password'].errors?.['notContainUpperCase']" class="d-block">Must contain at least 1 uppercase letter.</span>
+          <span *ngIf="form.controls['password'].errors?.['notContainLowerCase']" class="d-block">Must contain at least 1 lowercase letter.</span>
+          <span *ngIf="form.controls['password'].errors?.['notContainDigit']" class="d-block">Must contain at least 1 digit.</span>
+          <span *ngIf="form.controls['password'].errors?.['notContainSpecialChar']" class="d-block">Must contain at least 1 special characters.</span>
+        </mat-error>
+        <!-- Confirm Password -->
+        <mat-form-field appearance="outline">
+          <mat-label>Confirm Password</mat-label>
+          <input type="password" matInput formControlName="confirmPassword" [type]="hideConfirmPassword ? 'password' : 'text'">
+          <mat-icon matSuffix (click)="hideConfirmPassword = !hideConfirmPassword">{{ hideConfirmPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </mat-form-field>
+        <mat-error *ngIf="form.controls['confirmPassword'].invalid && (form.controls['confirmPassword'].touched || form.controls['confirmPassword'].dirty || submitted)">
+          <span *ngIf="form.controls['confirmPassword'].errors?.['required']" class="d-block">Field is required.</span>
+          <span *ngIf="form.controls['confirmPassword'].errors?.['passwordNotMatch']" class="d-block">Must match with new password.</span>
+        </mat-error>
+        <div class="button-group">
+          <button mat-raised-button color="primary" type="submit" class="text-white">Create</button>
+          <button mat-raised-button color="warn" type="button" class="text-white" (click)="reset()">Reset</button>
+          <button mat-raised-button color="accent" type="button" class="text-white" (click)="back()">Back</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
