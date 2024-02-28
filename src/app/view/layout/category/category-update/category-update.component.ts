@@ -10,6 +10,7 @@ import { customValidator } from 'src/app/validator/custom.validator';
 import { HttpStatusCode } from '@angular/common/http';
 import { CategoryService } from 'src/app/service/category.service';
 import { Category } from 'src/app/model/Category';
+
 @Component({
   selector: 'app-category-update',
   templateUrl: './category-update.component.html',
@@ -67,6 +68,7 @@ export class CategoryUpdateComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         let requestDto: Category = new Category();
+        requestDto.id = this.categoryDto.id;
         requestDto.name = this.form.get('name')!.value.trim();
 
         this.categoryService.update(requestDto).subscribe({
