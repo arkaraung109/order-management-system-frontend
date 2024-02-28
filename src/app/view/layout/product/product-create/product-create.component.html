@@ -1,0 +1,57 @@
+<div class="container-fluid m-0 p-0 d-flex align-items-center justify-content-center">
+  <div class="input-form p-5 col-lg-4 col-md-6 col-sm-7 col-xs-6">
+    <form [formGroup]="form" (ngSubmit)="create()" accept-charset="utf-8" htmlEscape="true" enctype="multipart/form-data" method="POST">
+      <div class="text-center mb-20">
+        <h4 class="text-header">Product Creation</h4>
+      </div>
+      <div class="p-4">
+        <!-- Name -->
+        <mat-form-field appearance="outline">
+          <mat-label>Product Name</mat-label>
+          <input type="text" matInput formControlName="name">
+        </mat-form-field>
+        <mat-error *ngIf="form.controls['name'].invalid && (form.controls['name'].touched || form.controls['name'].dirty || submitted)">
+          <span *ngIf="form.controls['name'].errors?.['required']" class="d-block">Field is required.</span>
+          <span *ngIf="form.controls['name'].errors?.['maxlength']" class="d-block">Must be at most 150 characters.</span>
+          <span *ngIf="form.controls['name'].errors?.['pattern']" class="d-block">Must not include special characters.</span>
+          <span *ngIf="form.controls['name'].errors?.['startWithSpace']" class="d-block">Must not start with space.</span>
+          <span *ngIf="form.controls['name'].errors?.['duplication']" class="d-block">Product already exists with this name.</span>
+        </mat-error>
+        <!-- Category -->
+        <mat-form-field appearance="outline">
+          <mat-label>Category</mat-label>
+          <mat-select formControlName="category">
+            <mat-option>None</mat-option>
+            <mat-option *ngFor="let category of categoryList" [value]="category.id">{{ category.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-error *ngIf="form.controls['category'].invalid && (form.controls['category'].touched || form.controls['category'].dirty || submitted)">
+          <span *ngIf="form.controls['category'].errors?.['required']" class="d-block">Field is required.</span>
+        </mat-error>
+        <!-- Manufacturing Cost -->
+        <mat-form-field appearance="outline">
+          <mat-label>Manufacturing Cost</mat-label>
+          <input type="text" matInput formControlName="manufacturingCost">
+        </mat-form-field>
+        <mat-error *ngIf="form.controls['manufacturingCost'].invalid && (form.controls['manufacturingCost'].touched || form.controls['manufacturingCost'].dirty || submitted)">
+          <span *ngIf="form.controls['manufacturingCost'].errors?.['required']" class="d-block">Field is required.</span>
+          <span *ngIf="form.controls['manufacturingCost'].errors?.['pattern']" class="d-block">Must be between 1 and 999999.</span>
+        </mat-error>
+        <!-- Retail Price -->
+        <mat-form-field appearance="outline">
+          <mat-label>Retail Price</mat-label>
+          <input type="text" matInput formControlName="retailPrice">
+        </mat-form-field>
+        <mat-error *ngIf="form.controls['retailPrice'].invalid && (form.controls['retailPrice'].touched || form.controls['retailPrice'].dirty || submitted)">
+          <span *ngIf="form.controls['retailPrice'].errors?.['required']" class="d-block">Field is required.</span>
+          <span *ngIf="form.controls['retailPrice'].errors?.['pattern']" class="d-block">Must be between 1 and 999999.</span>
+        </mat-error>
+        <div class="button-group">
+          <button mat-raised-button color="primary" type="submit" class="text-white">Create</button>
+          <button mat-raised-button color="warn" type="button" class="text-white" (click)="reset()">Reset</button>
+          <button mat-raised-button color="accent" type="button" class="text-white" (click)="back()">Back</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -48,7 +48,7 @@ export class MenuService {
             url: "/app/product/list",
             icon: "list",
             title: "View List",
-            allowedUserRoles: [UserRole.ADMIN]
+            allowedUserRoles: [UserRole.ADMIN, UserRole.DELIVERY_MANAGER]
           },
 
         ]

@@ -10,18 +10,21 @@ import { customValidator } from 'src/app/validator/custom.validator';
 import { HttpStatusCode } from '@angular/common/http';
 import { CategoryService } from 'src/app/service/category.service';
 import { Category } from 'src/app/model/Category';
+import { Product } from 'src/app/model/Product';
+import { ProductService } from 'src/app/service/product.service';
 
 @Component({
-  selector: 'app-category-update',
-  templateUrl: './category-update.component.html',
-  styleUrls: ['./category-update.component.scss']
+  selector: 'app-product-update',
+  templateUrl: './product-update.component.html',
+  styleUrls: ['./product-update.component.scss']
 })
-export class CategoryUpdateComponent implements OnInit {
+export class ProductUpdateComponent implements OnInit {
 
   form!: FormGroup;
   submitted: boolean = false;
   id: number = 0;
-  categoryDto: Category = new Category();
+  categoryList: Category[] = [];
+  productDto: Product = new Product();
 
   constructor(
     private fb: FormBuilder,
@@ -29,7 +32,8 @@ export class CategoryUpdateComponent implements OnInit {
     private router: Router,
     private matDialog: MatDialog,
     private toastrService: ToastrService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private productService: ProductService
   ) { }
 
   ngOnInit(): void {
@@ -38,13 +42,27 @@ export class CategoryUpdateComponent implements OnInit {
     });
 
     this.form = this.fb.group(
-      { name: ['', [Validators.required, Validators.maxLength(150), Validators.pattern("^[^<>~`!\\[\\]{}|@#^*+=:;/?%$\"\\\\]*$"), startWithSpaceValidator(), customValidator('duplication')]] }
+      {
+        name: ['', [Validators.required, Validators.maxLength(150), Validators.pattern("^[^<>~`!\\[\\]{}|@#^*+=:;?%$\\\\]*$"), startWithSpaceValidator(), customValidator('duplication')]],
+        category: ['', Validators.required],
+        manufacturingCost: ['', [Validators.required, Validators.pattern("^[1-9][0-9]{0,5}$")]],
+        retailPrice: ['', [Validators.required, Validators.pattern("^[1-9][0-9]{0,5}$")]]
+      }
     );
 
-    this.categoryService.fetchById(this.id).subscribe({
-      next: (response: Category) => {
-        this.form.get('name')!.setValue(response.name);
-        this.categoryDto = response;
+    this.categoryService.fetchAll().subscribe(data => {
+      this.categoryList = data;
+    });
+
+    this.productService.fetchById(this.id).subscribe({
+      next: (response: Product) => {
+        this.form.setValue({
+          name: response.name,
+          category: response.category.id,
+          manufacturingCost: response.manufacturingCost,
+          retailPrice: response.retailPrice
+        });
+        this.productDto = response;
       },
       error: (error) => {
         if (error.status == HttpStatusCode.NotFound) {
@@ -67,11 +85,14 @@ export class CategoryUpdateComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        let requestDto: Category = new Category();
-        requestDto.id = this.categoryDto.id;
+        let requestDto: Product = new Product();
+        requestDto.id = this.productDto.id;
         requestDto.name = this.form.get('name')!.value.trim();
+        requestDto.category.id = this.form.get('category')!.value;
+        requestDto.manufacturingCost = this.form.get('manufacturingCost')!.value;
+        requestDto.retailPrice = this.form.get('retailPrice')!.value;
 
-        this.categoryService.update(requestDto).subscribe({
+        this.productService.update(requestDto).subscribe({
           next: (response: HttpResponse) => {
             this.back();
             this.toastrService.success(response.message, response.title);
@@ -90,12 +111,15 @@ export class CategoryUpdateComponent implements OnInit {
 
   reset(): void {
     this.form.setValue({
-      name: this.categoryDto.name
+      name: this.productDto.name,
+      category: this.productDto.category.id,
+      manufacturingCost: this.productDto.manufacturingCost,
+      retailPrice: this.productDto.retailPrice
     });
   }
 
   back(): void {
-    this.router.navigate(['/app/category']);
+    this.router.navigate(['/app/product']);
   }
 
 }

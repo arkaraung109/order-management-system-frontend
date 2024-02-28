@@ -6,6 +6,7 @@ import { UserRole } from 'src/app/common/UserRole';
 import { ProfileComponent } from './profile/profile.component';
 import { UserComponent } from './user/user.component';
 import { CategoryComponent } from './category/category.component';
+import { ProductComponent } from './product/product.component';
 
 const routes: Routes = [
   {
@@ -60,6 +61,22 @@ const routes: Routes = [
         path: '',
         loadChildren: () => import('./category/category.module').then(m => m.CategoryModule),
         data: { breadcrumb: 'category' }
+      }
+    ]
+  },
+  {
+    path: 'product',
+    component: ProductComponent,
+    children: [
+      {
+        path: '',
+        redirectTo: 'list',
+        pathMatch: 'full'
+      },
+      {
+        path: '',
+        loadChildren: () => import('./product/product.module').then(m => m.ProductModule),
+        data: { breadcrumb: 'product' }
       }
     ]
   }

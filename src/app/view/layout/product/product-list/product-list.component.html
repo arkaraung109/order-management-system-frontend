@@ -1,0 +1,60 @@
+<div style="width: 90%; margin: 0 auto;">
+  <mat-form-field appearance="outline" style="width: 200px; float: right;">
+    <mat-label>Category</mat-label>
+    <mat-select [(ngModel)]="searchedCategory" (selectionChange)="search()">
+      <mat-option [value]="''">All Categories</mat-option>
+      <mat-option *ngFor="let category of categoryList" [value]="category.name">{{ category.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div class="container-fluid mat-elevation-z8 responsive-container">
+    <div class="filter-search">
+      <mat-form-field appearance="outline" style="width: 200px">
+        <mat-label>Filter Search</mat-label>
+        <input type="text" matInput [(ngModel)]="searchedKeyword">
+        <button *ngIf="searchedKeyword" matSuffix mat-icon-button aria-label="Clear" (click)="searchedKeyword=''; search();">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <button mat-raised-button color="primary" class="search-btn text-white" type="button" (click)="search()">Search</button>
+    </div>
+    <table mat-table [dataSource]="dataSource" matSort class="w-100" >
+      <ng-container matColumnDef="index">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>No.</th>
+        <td mat-cell *matCellDef="let element">{{ element.index }}</td>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      </ng-container>
+      <ng-container matColumnDef="category">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+        <td mat-cell *matCellDef="let element">{{ element.category.name }}</td>
+      </ng-container>
+      <ng-container matColumnDef="manufacturingCost">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Manufacturing Cost</th>
+        <td mat-cell *matCellDef="let element">{{ element.manufacturingCost }}</td>
+      </ng-container>
+      <ng-container matColumnDef="retailPrice">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Retail Price</th>
+        <td mat-cell *matCellDef="let element">{{ element.retailPrice }}</td>
+      </ng-container>
+      <ng-container matColumnDef="action" *ngIf="allowAction">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon style="cursor: pointer" (click)="update(element.id)">edit</mat-icon>
+          <mat-icon style="cursor: pointer" (click)="delete(element.id)">delete</mat-icon>
+        </td>
+      </ng-container>
+      <ng-container *ngIf="allowAction">
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsForAdmin; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsForAdmin"></tr>
+      </ng-container>
+      <ng-container *ngIf="!allowAction">
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </ng-container>
+    </table>
+    <h5 *ngIf="totalElements == 0" class="text-danger text-center mb-3 mt-3">No record found!</h5>
+  </div>
+  <mat-paginator #paginator [length]="totalElements" [pageSizeOptions]="pageSizes" showFirstLastButtons></mat-paginator>
+</div>
