@@ -1,0 +1,36 @@
+<div style="width: 90%; margin: 0 auto;">
+  <button mat-raised-button color="primary" type="button" class="text-white mb-3 float-end" (click)="back()">Back to product list</button>
+  <div class="container-fluid mat-elevation-z8 responsive-container">
+    <h5 class="table-header">Product Name: {{ productName }}</h5>
+    <table mat-table [dataSource]="dataSource" matSort class="w-100" >
+      <ng-container matColumnDef="index">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>No.</th>
+        <td mat-cell *matCellDef="let element">{{ element.index }}</td>
+      </ng-container>
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>
+        <td mat-cell *matCellDef="let element">{{ element.price }}</td>
+      </ng-container>
+      <ng-container matColumnDef="creationTimestamp">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Updated Date</th>
+        <td mat-cell *matCellDef="let element">{{ element.creationTimestamp | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
+      </ng-container>
+      <ng-container matColumnDef="action" *ngIf="allowAction">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon style="cursor: pointer" (click)="delete(element.id)">delete</mat-icon>
+        </td>
+      </ng-container>
+      <ng-container *ngIf="allowAction">
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsForAdmin; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsForAdmin"></tr>
+      </ng-container>
+      <ng-container *ngIf="!allowAction">
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </ng-container>
+    </table>
+    <h5 *ngIf="totalElements == 0" class="text-danger text-center mb-3 mt-3">No record found!</h5>
+  </div>
+  <mat-paginator #paginator [length]="totalElements" [pageSizeOptions]="pageSizes" showFirstLastButtons></mat-paginator>
+</div>

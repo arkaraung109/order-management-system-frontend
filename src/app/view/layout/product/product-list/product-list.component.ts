@@ -29,8 +29,8 @@ export class ProductListComponent implements OnInit {
   jwtHelperService = new JwtHelperService();
   allowAction: boolean = false;
   dataSource: MatTableDataSource<Category> = new MatTableDataSource<Category>();
-  displayedColumnsForAdmin: string[] = ['index', 'name', 'category', 'manufacturingCost', 'retailPrice', 'action'];
-  displayedColumns: string[] = ['index', 'name', 'category', 'manufacturingCost', 'retailPrice'];
+  displayedColumnsForAdmin: string[] = ['index', 'name', 'category', 'manufacturingCost', 'retailPrice', 'changeHistory', 'action'];
+  displayedColumns: string[] = ['index', 'name', 'category', 'manufacturingCost', 'retailPrice', 'changeHistory'];
   pageData: any[] = [];
   pageSizes = [5, 10, 15];
   totalElements: number = 0;
@@ -111,7 +111,7 @@ export class ProductListComponent implements OnInit {
 
       let index = this.paginator.pageIndex * this.paginator.pageSize;
       this.pageData = data.map(obj => {
-        return { 'index': ++index, ...obj, 'action': true };
+        return { 'index': ++index, ...obj, 'changeHistory': true, 'action': true };
       });
       this.dataSource = new MatTableDataSource(this.pageData);
       this.dataSource.sort = this.sort;
@@ -188,6 +188,54 @@ export class ProductListComponent implements OnInit {
             }
           }
         });
+      }
+    });
+  }
+
+  navigateToCostHistory(id: number): void {
+    this.productService.fetchById(id).subscribe({
+      next: (response: Product) => {
+        localStorage.setItem("pageIndex", this.paginator.pageIndex.toString());
+        localStorage.setItem("pageSize", this.paginator.pageSize.toString());
+        localStorage.setItem("categoryName", this.searchedCategory);
+        localStorage.setItem("keyword", this.searchedKeyword);
+        this.router.navigate(
+          ['/app/product/manufacturing-cost-history'],
+          {
+            queryParams: {
+              id: id
+            }
+          }
+        );
+      },
+      error: (error) => {
+        if (error.status == HttpStatusCode.NotFound) {
+          this.toastrService.error(error.error.message, error.error.title);
+        }
+      }
+    });
+  }
+
+  navigateToPriceHistory(id: number): void {
+    this.productService.fetchById(id).subscribe({
+      next: (response: Product) => {
+        localStorage.setItem("pageIndex", this.paginator.pageIndex.toString());
+        localStorage.setItem("pageSize", this.paginator.pageSize.toString());
+        localStorage.setItem("categoryName", this.searchedCategory);
+        localStorage.setItem("keyword", this.searchedKeyword);
+        this.router.navigate(
+          ['/app/product/retail-price-history'],
+          {
+            queryParams: {
+              id: id
+            }
+          }
+        );
+      },
+      error: (error) => {
+        if (error.status == HttpStatusCode.NotFound) {
+          this.toastrService.error(error.error.message, error.error.title);
+        }
       }
     });
   }

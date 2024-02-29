@@ -5,6 +5,8 @@ import { ProductUpdateComponent } from './product-update/product-update.componen
 import { authGuard } from 'src/app/interceptor/auth.guard';
 import { UserRole } from 'src/app/common/UserRole';
 import { ProductListComponent } from './product-list/product-list.component';
+import { ProductManufacturingCostHistoryComponent } from './product-manufacturing-cost-history/product-manufacturing-cost-history.component';
+import { ProductRetailPriceHistoryComponent } from './product-retail-price-history/product-retail-price-history.component';
 
 const routes: Routes = [
   {
@@ -36,6 +38,24 @@ const routes: Routes = [
     canActivate: [authGuard],
     data: {
       breadcrumb: 'list',
+      allowedUserRoles: [UserRole.ADMIN, UserRole.DELIVERY_MANAGER]
+    }
+  },
+  {
+    path: 'manufacturing-cost-history',
+    component: ProductManufacturingCostHistoryComponent,
+    canActivate: [authGuard],
+    data: {
+      breadcrumb: 'manufacturing-cost-history',
+      allowedUserRoles: [UserRole.ADMIN, UserRole.DELIVERY_MANAGER]
+    }
+  },
+  {
+    path: 'retail-price-history',
+    component: ProductRetailPriceHistoryComponent,
+    canActivate: [authGuard],
+    data: {
+      breadcrumb: 'retail-price-history',
       allowedUserRoles: [UserRole.ADMIN, UserRole.DELIVERY_MANAGER]
     }
   }

@@ -17,6 +17,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { ProductManufacturingCostHistoryComponent } from './product-manufacturing-cost-history/product-manufacturing-cost-history.component';
+import { ProductRetailPriceHistoryComponent } from './product-retail-price-history/product-retail-price-history.component';
 
 
 @NgModule({
@@ -24,7 +26,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     ProductComponent,
     ProductCreateComponent,
     ProductUpdateComponent,
-    ProductListComponent
+    ProductListComponent,
+    ProductManufacturingCostHistoryComponent,
+    ProductRetailPriceHistoryComponent
   ],
   imports: [
     CommonModule,

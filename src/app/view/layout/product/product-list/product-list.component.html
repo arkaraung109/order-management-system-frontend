@@ -38,6 +38,13 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Retail Price</th>
         <td mat-cell *matCellDef="let element">{{ element.retailPrice }}</td>
       </ng-container>
+      <ng-container matColumnDef="changeHistory">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>View Change History</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-raised-button color="primary" type="button" class="text-white me-3" (click)="navigateToCostHistory(element.id)">Cost History</button>
+          <button mat-raised-button color="accent" type="button" class="text-white" (click)="navigateToPriceHistory(element.id)">Price History</button>
+        </td>
+      </ng-container>
       <ng-container matColumnDef="action" *ngIf="allowAction">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
         <td mat-cell *matCellDef="let element">

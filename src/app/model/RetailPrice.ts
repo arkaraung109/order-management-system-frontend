@@ -3,6 +3,6 @@ import { Product } from "./Product";
 export class RetailPrice {
   id!: number;
   price!: number;
-  updatedDate!: string;
+  creationTimestamp!: string;
   product: Product = new Product();
 }
