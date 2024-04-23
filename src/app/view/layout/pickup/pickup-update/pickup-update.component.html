@@ -1,0 +1,26 @@
+<div class="container-fluid m-0 p-0 d-flex align-items-center justify-content-center">
+  <div class="input-form p-5 col-lg-4 col-md-6 col-sm-7 col-xs-6">
+    <form [formGroup]="form" (ngSubmit)="update()" accept-charset="utf-8" htmlEscape="true" enctype="multipart/form-data" method="POST">
+      <div class="text-center mb-20">
+        <h4 class="text-header">Pickup Update</h4>
+      </div>
+      <div class="p-4">
+        <!-- Pickup Date -->
+        <mat-form-field appearance="outline">
+          <mat-label>Pickup Date</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="pickupDate" readonly>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker disabled="false"></mat-datepicker>
+        </mat-form-field>
+        <mat-error *ngIf="form.controls['pickupDate'].invalid && (form.controls['pickupDate'].touched || form.controls['pickupDate'].dirty || submitted)">
+          <span *ngIf="form.controls['pickupDate'].errors?.['required']" class="d-block">Field is required.</span>
+        </mat-error>
+        <div class="button-group">
+          <button mat-raised-button color="primary" type="submit" class="text-white">Update</button>
+          <button mat-raised-button color="warn" type="button" class="text-white" (click)="reset()">Reset</button>
+          <button mat-raised-button color="accent" type="button" class="text-white" (click)="back()">Back</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

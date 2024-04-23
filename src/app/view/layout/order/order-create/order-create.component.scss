@@ -1,0 +1,71 @@
+.responsive-container .mat-column-no {
+  width: 70px;
+  max-width: 70px;
+  word-wrap: break-word;
+}
+
+.responsive-container .mat-column-product {
+  width: 200px;
+  max-width: 200px;
+  word-wrap: break-word;
+}
+
+.responsive-container .mat-column-category {
+  width: 150px;
+  max-width: 150px;
+  word-wrap: break-word;
+}
+
+.responsive-container .mat-column-quantity {
+  width: 150px;
+  max-width: 150px;
+  word-wrap: break-word;
+}
+
+.responsive-container .mat-column-unitPrice {
+  width: 150px;
+  max-width: 150px;
+  word-wrap: break-word;
+}
+
+.responsive-container .mat-column-amount {
+  width: 150px;
+  max-width: 150px;
+  word-wrap: break-word;
+}
+
+.responsive-container .mat-column-orderDetailsAction {
+  width: 70px;
+  max-width: 70px;
+  word-wrap: break-word;
+}
+
+.order-create-table {
+  min-width: 1000px !important;
+}
+
+.row {
+  width: 610px !important;
+}
+
+.input-form {
+  margin-bottom: 40px !important;
+}
+
+.save-button-group {
+  float: right;
+  margin-top: 20px !important;
+  margin-bottom: 100px !important;
+}
+
+.mat-mdc-header-cell {
+  font-weight: bold !important;
+}
+
+.clearfix {
+  margin-top: 20px;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  border-radius: 0;
+}

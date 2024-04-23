@@ -1,0 +1,41 @@
+.mat-mdc-form-field .mdc-text-field--outlined .mdc-notched-outline--upgraded .mdc-floating-label--float-above {
+    padding-right: 14px;
+  }
+
+  .responsive-container .mat-column-index .mat-sort-header-container {
+    width: 70px;
+    max-width: 70px;
+    word-wrap: break-word;
+  }
+
+  .responsive-container .mat-column-id .mat-sort-header-container {
+    width: 150px;
+    max-width: 150px;
+    word-wrap: break-word;
+  }
+
+  .responsive-container .mat-column-orderDate .mat-sort-header-container {
+    width: 150px;
+    max-width: 150px;
+    word-wrap: break-word;
+  }
+
+  .responsive-container .mat-column-customer .mat-sort-header-container {
+    width: 250px;
+    max-width: 250px;
+    word-wrap: break-word;
+  }
+
+  .responsive-container .mat-column-createPayment .mat-sort-header-container {
+    width: 150px;
+    max-width: 150px;
+    word-wrap: break-word;
+  }
+
+  .payment-create-table {
+    min-width: 800px !important;
+  }
+
+  .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    border-radius: 0;
+  }

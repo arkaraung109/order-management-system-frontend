@@ -1,0 +1,50 @@
+<div style="width: 90%; margin: 0 auto;">
+  <!-- Search by order date -->
+  <mat-form-field appearance="outline" style="width: 300px; margin-top: 10px; margin-right: 15px;">
+    <mat-label>Search by order date</mat-label>
+    <mat-date-range-input [rangePicker]="picker">
+      <input matStartDate [(ngModel)]="searchedStartDate" (dateChange)="search()" readonly>
+      <input matEndDate [(ngModel)]="searchedEndDate" (dateChange)="search()" readonly>
+    </mat-date-range-input>
+    <button *ngIf="searchedStartDate || searchedEndDate" matSuffix mat-icon-button aria-label="Clear" (click)="searchedStartDate=''; searchedEndDate=''; search();">
+      <mat-icon>close</mat-icon>
+    </button>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-date-range-picker #picker disabled="false"></mat-date-range-picker>
+  </mat-form-field>
+  <div class="container-fluid mat-elevation-z8 responsive-container">
+    <table mat-table [dataSource]="dataSource" matSort class="pickup-list-table w-100">
+      <ng-container matColumnDef="index">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>No.</th>
+        <td mat-cell *matCellDef="let element">{{ element.index }}</td>
+      </ng-container>
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Pickup ID</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
+      <ng-container matColumnDef="pickupDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Pickup Date</th>
+        <td mat-cell *matCellDef="let element">{{ element.pickupDate }}</td>
+      </ng-container>
+      <ng-container matColumnDef="pickupDetails">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>View Pickup Details</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-raised-button color="primary" type="button" class="text-white" (click)="navigateToPickupDetails(element.id)">Pickup Details</button>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon style="cursor: pointer" (click)="update(element.id)">edit</mat-icon>
+          <mat-icon style="cursor: pointer" (click)="delete(element.id)">delete</mat-icon>
+        </td>
+      </ng-container>
+      <ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </ng-container>
+    </table>
+  </div>
+  <h5 *ngIf="totalElements == 0" class="text-danger text-center mb-3 mt-3">No record found!</h5>
+  <mat-paginator #paginator [length]="totalElements" [pageSizeOptions]="pageSizes" showFirstLastButtons></mat-paginator>
+</div>

@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { environment } from 'src/environment/environment';
 import { HttpResponse } from '../common/HttpResponse';
-import { User } from '../model/User';
 import { PasswordReset } from '../model/PasswordReset';
 
 @Injectable({

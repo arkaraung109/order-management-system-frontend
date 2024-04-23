@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { ForgotPasswordRoutingModule } from './forgot-password-routing.module';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { VerifyComponent } from './verify/verify.component';
@@ -10,7 +9,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ForgotPasswordComponent } from './forgot-password.component';
 import { MatIconModule } from '@angular/material/icon';
-
 
 @NgModule({
   declarations: [

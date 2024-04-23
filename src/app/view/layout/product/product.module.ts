@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { ProductRoutingModule } from './product-routing.module';
 import { ProductComponent } from './product.component';
 import { ProductCreateComponent } from './product-create/product-create.component';
@@ -19,7 +18,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ProductManufacturingCostHistoryComponent } from './product-manufacturing-cost-history/product-manufacturing-cost-history.component';
 import { ProductRetailPriceHistoryComponent } from './product-retail-price-history/product-retail-price-history.component';
-
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
@@ -46,7 +45,8 @@ import { ProductRetailPriceHistoryComponent } from './product-retail-price-histo
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatDatepickerModule
   ]
 })
 export class ProductModule { }

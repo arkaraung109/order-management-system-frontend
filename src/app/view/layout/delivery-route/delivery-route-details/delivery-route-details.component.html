@@ -1,0 +1,93 @@
+<div class="container-fluid m-0 p-0 d-flex align-items-center justify-content-center">
+  <div class="input-form p-5 col-lg-4 col-md-6 col-sm-7 col-xs-6">
+    <form [formGroup]="form" (ngSubmit)="update()" accept-charset="utf-8" htmlEscape="true" enctype="multipart/form-data" method="POST">
+      <div class="text-center mb-20">
+        <h4 class="text-header">Delivery Route Details Update</h4>
+      </div>
+      <div class="p-4">
+        <!-- Delivered Quantity -->
+        <mat-form-field appearance="outline">
+          <mat-label>Delivered Quantity</mat-label>
+          <input type="text" matInput formControlName="deliveredQuantity">
+        </mat-form-field>
+        <mat-error *ngIf="form.controls['deliveredQuantity'].invalid && (form.controls['deliveredQuantity'].touched || form.controls['deliveredQuantity'].dirty || submitted)">
+          <span *ngIf="form.controls['deliveredQuantity'].errors?.['required']" class="d-block">Field is required.</span>
+          <span *ngIf="form.controls['deliveredQuantity'].errors?.['quantityError']" class="d-block">Must be between 1 and {{ maxQuantity }}.</span>
+        </mat-error>
+        <!-- Shipping Address -->
+        <mat-form-field appearance="outline">
+          <mat-label>Shipping Address</mat-label>
+          <mat-select formControlName="shippingAddress">
+            <mat-form-field>
+              <input type="text" matInput [(ngModel)]="searchText" [ngModelOptions]="{ standalone: true }" placeholder="Search..."/>
+            </mat-form-field>
+            <mat-option>None</mat-option>
+            <mat-option *ngFor="let shippingAddress of shippingAddressList | search : searchText" [value]="shippingAddress.id">{{ shippingAddress.address }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-error *ngIf="form.controls['shippingAddress'].invalid && (form.controls['shippingAddress'].touched || form.controls['shippingAddress'].dirty || submitted)">
+          <span *ngIf="form.controls['shippingAddress'].errors?.['required']" class="d-block">Field is required.</span>
+        </mat-error>
+        <div class="button-group">
+          <button mat-raised-button color="primary" type="submit" class="text-white" [disabled]="disable">Update</button>
+          <button mat-raised-button color="warn" type="button" class="text-white" (click)="reset()" [disabled]="disable">Reset</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div style="width: 90%; margin: 0 auto 150px;">
+  <h5 class="table-header">Delivery Route ID: {{ deliveryRouteDto.id }}</h5>
+  <h5 class="table-header">Delivery Date: {{ deliveryRouteDto.deliveryDate }}</h5>
+  <div class="container-fluid mat-elevation-z8 responsive-container">
+    <table mat-table [dataSource]="dataSource" matSort class="delivery-route-details-table w-100">
+      <ng-container matColumnDef="index">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>No.</th>
+        <td mat-cell *matCellDef="let element">{{ element.index }}</td>
+      </ng-container>
+      <ng-container matColumnDef="orderId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Order ID</th>
+        <td mat-cell *matCellDef="let element">{{ element.orderDetails?.order?.id }}</td>
+      </ng-container>
+      <ng-container matColumnDef="customer">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Customer</th>
+        <td mat-cell *matCellDef="let element">{{ element.orderDetails?.order?.customer?.name }}</td>
+      </ng-container>
+      <ng-container matColumnDef="orderDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Order Date</th>
+        <td mat-cell *matCellDef="let element">{{ element.orderDetails?.order?.orderDate }}</td>
+      </ng-container>
+      <ng-container matColumnDef="product">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Product</th>
+        <td mat-cell *matCellDef="let element">{{ element.orderDetails?.product?.name }}</td>
+      </ng-container>
+      <ng-container matColumnDef="category">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+        <td mat-cell *matCellDef="let element">{{ element.orderDetails?.product?.category?.name }}</td>
+      </ng-container>
+      <ng-container matColumnDef="deliveredQuantity">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Delivered Quantity</th>
+        <td mat-cell *matCellDef="let element">{{ element.deliveredQuantity }}</td>
+      </ng-container>
+      <ng-container matColumnDef="shippingAddress" >
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Shipping Address</th>
+        <td mat-cell *matCellDef="let element">{{ element.shippingAddress?.address }}</td>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon style="cursor: pointer" (click)="edit(element.id)">edit</mat-icon>
+          <mat-icon style="cursor: pointer" (click)="delete(element.id)">delete</mat-icon>
+        </td>
+      </ng-container>
+      <ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </ng-container>
+    </table>
+  </div>
+  <h5 *ngIf="pageData.length == 0" class="text-danger text-center mb-3 mt-3">No record found!</h5>
+  <div class="button-group back-button-group">
+    <button mat-raised-button color="accent" type="button" class="text-white" (click)="back()">Back to delivery route list</button>
+  </div>
+</div>

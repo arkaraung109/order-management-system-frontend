@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -18,6 +18,7 @@ import { Category } from 'src/app/model/Category';
 })
 export class CategoryCreateComponent implements OnInit {
 
+  @ViewChild(FormGroupDirective) formDirective!: FormGroupDirective;
   form!: FormGroup;
   submitted: boolean = false;
 
@@ -58,7 +59,7 @@ export class CategoryCreateComponent implements OnInit {
 
             moreDialogRef.afterClosed().subscribe(result => {
               if (result) {
-                location.reload();
+                this.reset();
               } else {
                 this.back();
               }
@@ -68,9 +69,7 @@ export class CategoryCreateComponent implements OnInit {
           },
           error: (error) => {
             if (error.status == HttpStatusCode.Conflict) {
-              if (error.error.message == "Duplicated Name") {
-                this.form.get('name')!.setErrors({ required: false, duplication: true });
-              }
+              this.form.get('name')!.setErrors({ required: false, duplication: true });
             }
           }
         });
@@ -79,7 +78,8 @@ export class CategoryCreateComponent implements OnInit {
   }
 
   reset(): void {
-    this.form.reset();
+    this.submitted = false;
+    this.formDirective.resetForm();
   }
 
   back(): void {

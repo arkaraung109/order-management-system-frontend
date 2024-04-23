@@ -30,7 +30,7 @@ export class MenuService {
             url: "/app/category/list",
             icon: "list",
             title: "View List",
-            allowedUserRoles: [UserRole.ADMIN, UserRole.DELIVERY_MANAGER]
+            allowedUserRoles: [UserRole.ADMIN, UserRole.DELIVERY_MANAGER, UserRole.SALES_STAFF]
           },
         ]
       },
@@ -48,7 +48,7 @@ export class MenuService {
             url: "/app/product/list",
             icon: "list",
             title: "View List",
-            allowedUserRoles: [UserRole.ADMIN, UserRole.DELIVERY_MANAGER]
+            allowedUserRoles: [UserRole.ADMIN, UserRole.DELIVERY_MANAGER, UserRole.SALES_STAFF]
           },
 
         ]
@@ -61,13 +61,13 @@ export class MenuService {
             url: "/app/order/create",
             icon: "add",
             title: "Create New",
-            allowedUserRoles: [UserRole.ADMIN]
+            allowedUserRoles: [UserRole.ADMIN, UserRole.SALES_STAFF]
           },
           {
             url: "/app/order/list",
             icon: "list",
             title: "View List",
-            allowedUserRoles: [UserRole.ADMIN]
+            allowedUserRoles: [UserRole.ADMIN, UserRole.DELIVERY_MANAGER, UserRole.SALES_STAFF]
           },
 
         ]
@@ -80,13 +80,51 @@ export class MenuService {
             url: "/app/delivery-route/create",
             icon: "add",
             title: "Create New",
-            allowedUserRoles: [UserRole.ADMIN]
+            allowedUserRoles: [UserRole.ADMIN, UserRole.DELIVERY_MANAGER]
           },
           {
             url: "/app/delivery-route/list",
             icon: "list",
             title: "View List",
-            allowedUserRoles: [UserRole.ADMIN]
+            allowedUserRoles: [UserRole.ADMIN, UserRole.DELIVERY_MANAGER]
+          },
+
+        ]
+      },
+      {
+        icon: "store",
+        title: "Pickup",
+        subMenu: [
+          {
+            url: "/app/pickup/create",
+            icon: "add",
+            title: "Create New",
+            allowedUserRoles: [UserRole.ADMIN, UserRole.DELIVERY_MANAGER]
+          },
+          {
+            url: "/app/pickup/list",
+            icon: "list",
+            title: "View List",
+            allowedUserRoles: [UserRole.ADMIN, UserRole.DELIVERY_MANAGER]
+          },
+
+        ]
+      },
+      {
+        icon: "attach_money",
+        title: "Payment",
+        subMenu: [
+          {
+            url: "/app/payment/create",
+            icon: "add",
+            title: "Create New",
+            allowedUserRoles: [UserRole.ADMIN, UserRole.SALES_STAFF]
+          },
+          {
+            url: "/app/payment/list",
+            icon: "list",
+            title: "View List",
+            allowedUserRoles: [UserRole.ADMIN, UserRole.SALES_STAFF]
           },
 
         ]
@@ -105,7 +143,26 @@ export class MenuService {
             url: "/app/customer/list",
             icon: "list",
             title: "View List",
+            allowedUserRoles: [UserRole.ADMIN, UserRole.DELIVERY_MANAGER, UserRole.SALES_STAFF]
+          },
+
+        ]
+      },
+      {
+        icon: "location_on",
+        title: "Shipping Address",
+        subMenu: [
+          {
+            url: "/app/shipping-address/create",
+            icon: "add",
+            title: "Create New",
             allowedUserRoles: [UserRole.ADMIN]
+          },
+          {
+            url: "/app/shipping-address/list",
+            icon: "list",
+            title: "View List",
+            allowedUserRoles: [UserRole.ADMIN, UserRole.DELIVERY_MANAGER]
           },
 
         ]

@@ -1,5 +1,5 @@
 import { HttpStatusCode } from '@angular/common/http';
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -18,7 +18,8 @@ import { ConfirmDialogComponent } from 'src/app/view/share/confirm-dialog/confir
 @Component({
   selector: 'app-category-list',
   templateUrl: './category-list.component.html',
-  styleUrls: ['./category-list.component.scss']
+  styleUrls: ['./category-list.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class CategoryListComponent implements OnInit {
 
@@ -27,7 +28,7 @@ export class CategoryListComponent implements OnInit {
   jwtHelperService = new JwtHelperService();
   allowAction: boolean = false;
   dataSource: MatTableDataSource<Category> = new MatTableDataSource<Category>();
-  displayedColumnsForAdmin: string[] = ['index', 'name', 'action'];
+  displayedColumnsWithAction: string[] = ['index', 'name', 'action'];
   displayedColumns: string[] = ['index', 'name'];
   pageData: any[] = [];
   pageSizes = [5, 10, 15];
@@ -71,11 +72,11 @@ export class CategoryListComponent implements OnInit {
     this.searchedKeyword = this.keyword == null ? "" : this.keyword;
     this.changeDetector.detectChanges();
 
+    this.dataSource.paginator = this.paginator;
     this.assignPageData();
   }
 
   assignPageData() {
-    this.dataSource.paginator = this.paginator;
     this.paginator.page.pipe(
       startWith({}),
       switchMap(() => {
@@ -110,27 +111,7 @@ export class CategoryListComponent implements OnInit {
     this.paginator.pageIndex = 0;
     this.paginator.length = this.totalElements;
     this.dataSource.paginator = this.paginator;
-    this.paginator.page.pipe(
-      startWith({}),
-      switchMap(() => {
-        return this.categoryService.fetchPage(this.searchedKeyword, this.paginator.pageIndex + 1, this.paginator.pageSize)
-          .pipe(catchError(() => {
-            throw new Error("Error");
-          }));
-      }),
-      map((data: any) => {
-        if (data == null) return [];
-        this.totalElements = data.totalElements;
-        return data.elementList;
-      })
-    ).subscribe((data: any[]) => {
-      let index = this.paginator.pageIndex * this.paginator.pageSize;
-      this.pageData = data.map(obj => {
-        return { 'index': ++index, ...obj, 'action': true };
-      });
-      this.dataSource = new MatTableDataSource(this.pageData);
-      this.dataSource.sort = this.sort;
-    });
+    this.assignPageData();
   }
 
   update(id: number): void {
@@ -165,12 +146,18 @@ export class CategoryListComponent implements OnInit {
       if (result) {
         this.categoryService.delete(id).subscribe({
           next: (response: HttpResponse) => {
+            if(this.pageData.length == 1 && this.paginator.pageIndex != 0) {
+              this.paginator.pageIndex--;
+            }
+
             this.assignPageData();
             this.toastrService.success(response.message, response.title);
           },
           error: (error) => {
-            if (error.status == HttpStatusCode.NotAcceptable) {
-              this.toastrService.error("Please delete products contained in this category first.", error.error.title);
+            if (error.status == HttpStatusCode.NotFound) {
+              this.toastrService.error(error.error.message, error.error.title);
+            } else if (error.status == HttpStatusCode.NotAcceptable) {
+              this.toastrService.error("There are products contained in this category, so please delete them at first.", error.error.title);
             }
           }
         });

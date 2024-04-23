@@ -1,6 +1,7 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 export const containSpaceValidator = (): ValidatorFn => {
+
   return (control: AbstractControl): ValidationErrors | null => {
     const regexp = /^\s*[^\s]*$/;
     if (control.value == '') {
@@ -8,4 +9,5 @@ export const containSpaceValidator = (): ValidatorFn => {
     }
     return regexp.test(control.value) ? null : { containSpace: true };
   };
+
 };

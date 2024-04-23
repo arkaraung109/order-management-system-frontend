@@ -77,7 +77,7 @@ mat-paginator {
 .responsive-container {
   overflow: auto;
   max-height: 410px;
-  background-color: white
+  background-color: white;
 }
 
 .mat-mdc-paginator .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mat-mdc-form-field-infix {
@@ -116,7 +116,8 @@ mat-paginator {
 }
 
 .filter-search {
-  margin-top: 15px;
+  margin-left: 10px;
+  margin-top: 20px;
   margin-bottom: -15px;
 }
 

@@ -11,13 +11,13 @@
     </div>
     <mat-nav-list class="p-16">
       <a mat-list-item routerLink="/app/dashboard" class="list-item menu-shadow" (click)="toggle()" routerLinkActive="active-link">
-        <mat-icon class="vertical-middle me-16 fs-24 active-color">dashboard</mat-icon>
+        <mat-icon class="vertical-middle me-2 fs-24 active-color">dashboard</mat-icon>
         <span class="vertical-middle fs-18 active-color">Dashboard</span>
       </a>
       <mat-accordion [multi]="false">
         <mat-expansion-panel [class.mat-elevation-z0]="false" *ngFor="let menu of menuList" style="margin-top: 10px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
           <mat-expansion-panel-header class="vertical-middle" class="list-item">
-            <mat-icon class="vertical-middle me-16 fs-24">{{ menu.icon }}</mat-icon>
+            <mat-icon class="vertical-middle me-2 fs-24">{{ menu.icon }}</mat-icon>
             <span class="vertical-middle fs-18">{{ menu.title }}</span>
           </mat-expansion-panel-header>
           <mat-nav-list>

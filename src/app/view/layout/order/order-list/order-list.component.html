@@ -1,0 +1,121 @@
+<div style="width: 90%; margin: 0 auto;">
+  <!-- Search by customer -->
+  <mat-form-field appearance="outline" style="width: 300px; margin-top: 10px; margin-right: 15px;">
+    <mat-label>Search by customer</mat-label>
+    <mat-select [(ngModel)]="searchedCustomerName" (selectionChange)="search()">
+      <mat-form-field>
+        <input type="text" matInput [(ngModel)]="searchText" [ngModelOptions]="{ standalone: true }" placeholder="Search..."/>
+      </mat-form-field>
+      <mat-option [value]="''">All Customers</mat-option>
+      <mat-option *ngFor="let customer of customerList | search : searchText" [value]="customer.name">{{ customer.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <!-- Search by order date -->
+  <mat-form-field appearance="outline" style="width: 300px; margin-top: 10px; margin-right: 15px;">
+    <mat-label>Search by order date</mat-label>
+    <mat-date-range-input [rangePicker]="picker">
+      <input matStartDate [(ngModel)]="searchedStartDate" (dateChange)="search()" readonly>
+      <input matEndDate [(ngModel)]="searchedEndDate" (dateChange)="search()" readonly>
+    </mat-date-range-input>
+    <button *ngIf="searchedStartDate || searchedEndDate" matSuffix mat-icon-button aria-label="Clear" (click)="searchedStartDate=''; searchedEndDate=''; search();">
+      <mat-icon>close</mat-icon>
+    </button>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-date-range-picker #picker disabled="false"></mat-date-range-picker>
+  </mat-form-field>
+  <!-- Search by fulfilment status -->
+  <mat-form-field appearance="outline" style="width: 250px; margin-top: 10px; margin-right: 15px;">
+    <mat-label>Search by fulfilment status</mat-label>
+    <mat-select [(ngModel)]="searchedFulfilmentStatus" (selectionChange)="search()">
+      <mat-option [value]="''">All</mat-option>
+      <mat-option [value]="'Unfulfilled'">Unfulfilled</mat-option>
+      <mat-option [value]="'Partially Fulfilled'">Partially Fulfilled</mat-option>
+      <mat-option [value]="'Fulfilled'">Fulfilled</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <!-- Search by payment status -->
+  <mat-form-field appearance="outline" style="width: 250px; margin-top: 10px; margin-right: 15px;">
+    <mat-label>Search by payment status</mat-label>
+    <mat-select [(ngModel)]="searchedPaymentStatus" (selectionChange)="search()">
+      <mat-option [value]="''">All</mat-option>
+      <mat-option [value]="'Unpaid'">Unpaid</mat-option>
+      <mat-option [value]="'Partially Paid'">Partially Paid</mat-option>
+      <mat-option [value]="'Paid'">Paid</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div class="container-fluid mat-elevation-z8 responsive-container">
+    <table mat-table [dataSource]="dataSource" matSort class="order-list-table w-100">
+      <ng-container matColumnDef="index">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>No.</th>
+        <td mat-cell *matCellDef="let element">{{ element.index }}</td>
+      </ng-container>
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Order ID</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
+      <ng-container matColumnDef="orderDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Order Date</th>
+        <td mat-cell *matCellDef="let element">{{ element.orderDate }}</td>
+      </ng-container>
+      <ng-container matColumnDef="customer">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Customer</th>
+        <td mat-cell *matCellDef="let element">{{ element.customer?.name }}</td>
+      </ng-container>
+      <ng-container matColumnDef="fulfilmentStatus">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Fulfilment Status</th>
+        <td mat-cell *matCellDef="let element">{{ element.fulfilmentStatus }}</td>
+      </ng-container>
+      <ng-container matColumnDef="paymentStatus">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Payment Status</th>
+        <td mat-cell *matCellDef="let element">{{ element.paymentStatus }}</td>
+      </ng-container>
+      <ng-container matColumnDef="orderedAmount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Ordered Amount</th>
+        <td mat-cell *matCellDef="let element">{{ (element.orderedAmount) | number }}</td>
+      </ng-container>
+      <ng-container matColumnDef="paidAmount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Paid Amount</th>
+        <td mat-cell *matCellDef="let element">{{ (element.paidAmount) | number }}</td>
+      </ng-container>
+      <ng-container matColumnDef="remainingAmount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Remaining Amount</th>
+        <td mat-cell *matCellDef="let element">{{ (element.orderedAmount - element.paidAmount) | number }}</td>
+      </ng-container>
+      <ng-container matColumnDef="profit">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Profit</th>
+        <td mat-cell *matCellDef="let element">{{ (element.profit) | number }}</td>
+      </ng-container>
+      <ng-container matColumnDef="user">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Accepted By</th>
+        <td mat-cell *matCellDef="let element">{{ element.user?.name }}</td>
+      </ng-container>
+      <ng-container matColumnDef="orderDetails">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>View Order Details</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-raised-button color="primary" type="button" class="text-white" (click)="navigateToOrderDetails(element.id)">Order Details</button>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon style="cursor: pointer" (click)="update(element.id)">edit</mat-icon>
+          <mat-icon style="cursor: pointer" (click)="delete(element.id)">delete</mat-icon>
+        </td>
+      </ng-container>
+      <ng-container *ngIf="loginRole == 'ADMIN'">
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsForAdmin;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsForAdmin"></tr>
+      </ng-container>
+      <ng-container *ngIf="loginRole == 'SALES_STAFF'">
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsForSalesStaff;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsForSalesStaff"></tr>
+      </ng-container>
+      <ng-container *ngIf="loginRole == 'DELIVERY_MANAGER'">
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsForDeliveryManager;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsForDeliveryManager"></tr>
+      </ng-container>
+    </table>
+  </div>
+  <h5 *ngIf="totalElements == 0" class="text-danger text-center mb-3 mt-3">No record found!</h5>
+  <mat-paginator #paginator [length]="totalElements" [pageSizeOptions]="pageSizes" showFirstLastButtons></mat-paginator>
+</div>

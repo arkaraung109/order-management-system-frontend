@@ -35,9 +35,6 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    let jwtToken = this.authService.fetchJwtToken();
-    let username = this.jwtHelperService.decodeToken(jwtToken)!.username;
-
     this.form = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(150), Validators.pattern("^[^<>~`!\\[\\]{}|@#^*+=:;/?%$\"\\\\]*$"), startWithSpaceValidator()]],
       email: ['', [Validators.required, Validators.maxLength(150), Validators.pattern("^([\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4})$"), startWithSpaceValidator(), containSpaceValidator(), customValidator('duplication')]],
@@ -45,6 +42,9 @@ export class ProfileComponent implements OnInit {
       username: [{ value: '', disabled: true }],
       role: [{ value: '', disabled: true }]
     });
+
+    let jwtToken = this.authService.fetchJwtToken();
+    let username = this.jwtHelperService.decodeToken(jwtToken)!.username;
 
     this.userService.fetchByUsername(username).subscribe({
       next: (response: User) => {
@@ -61,6 +61,7 @@ export class ProfileComponent implements OnInit {
         if (error.status == HttpStatusCode.NotFound) {
           this.toastrService.error(error.error.message, error.error.title);
         }
+        this.back();
       }
     });
   }

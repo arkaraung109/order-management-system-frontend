@@ -36,7 +36,7 @@ const routes: Routes = [
     canActivate: [authGuard],
     data: {
       breadcrumb: 'list',
-      allowedUserRoles: [UserRole.ADMIN, UserRole.DELIVERY_MANAGER]
+      allowedUserRoles: [UserRole.ADMIN, UserRole.DELIVERY_MANAGER, UserRole.SALES_STAFF]
     }
   }
 ];

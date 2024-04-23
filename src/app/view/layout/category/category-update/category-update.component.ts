@@ -33,13 +33,13 @@ export class CategoryUpdateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      this.id = Number(params['id']);
-    });
-
     this.form = this.fb.group(
       { name: ['', [Validators.required, Validators.maxLength(150), Validators.pattern("^[^<>~`!\\[\\]{}|@#^*+=:;/?%$\"\\\\]*$"), startWithSpaceValidator(), customValidator('duplication')]] }
     );
+    
+    this.route.queryParams.subscribe(params => {
+      this.id = Number(params['id']);
+    });
 
     this.categoryService.fetchById(this.id).subscribe({
       next: (response: Category) => {
@@ -77,10 +77,10 @@ export class CategoryUpdateComponent implements OnInit {
             this.toastrService.success(response.message, response.title);
           },
           error: (error) => {
-            if (error.status == HttpStatusCode.Conflict) {
-              if (error.error.message == "Duplicated Name") {
-                this.form.get('name')!.setErrors({ required: false, duplication: true });
-              }
+            if (error.status == HttpStatusCode.NotFound) {
+              this.toastrService.error(error.error.message, error.error.title);
+            } else if (error.status == HttpStatusCode.Conflict) {
+              this.form.get('name')!.setErrors({ required: false, duplication: true });
             }
           }
         });

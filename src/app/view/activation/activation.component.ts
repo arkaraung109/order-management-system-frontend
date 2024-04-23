@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpResponse } from 'src/app/common/HttpResponse';
 import { UserService } from 'src/app/service/user.service';
+
 @Component({
   selector: 'app-activation',
   templateUrl: './activation.component.html',

@@ -1,5 +1,5 @@
 import { HttpStatusCode } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -14,7 +14,8 @@ import { UserService } from 'src/app/service/user.service';
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.scss']
+  styleUrls: ['./user-list.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class UserListComponent implements OnInit {
 
@@ -42,11 +43,11 @@ export class UserListComponent implements OnInit {
   }
 
   ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
     this.assignPageData();
   }
 
   assignPageData() {
-    this.dataSource.paginator = this.paginator;
     this.paginator.page.pipe(
       startWith({}),
       switchMap(() => {
@@ -67,6 +68,18 @@ export class UserListComponent implements OnInit {
       });
       this.dataSource = new MatTableDataSource(this.pageData);
       this.dataSource.sort = this.sort;
+      this.dataSource.sortingDataAccessor = (element: any, property) => {
+        switch (property) {
+          case 'index': return element.index;
+          case 'name': return element.name;
+          case 'email': return element.email;
+          case 'username': return element.username;
+          case 'phone': return element.phone;
+          case 'role': return element.role?.name;
+          case 'creationTimestamp': return element.creationTimestamp;
+          default: return 0;
+        }
+      };
     });
   }
 
@@ -74,6 +87,7 @@ export class UserListComponent implements OnInit {
     this.totalElements = 0;
     this.paginator.pageIndex = 0;
     this.paginator.length = this.totalElements;
+    this.dataSource.paginator = this.paginator;
     this.assignPageData();
   }
 

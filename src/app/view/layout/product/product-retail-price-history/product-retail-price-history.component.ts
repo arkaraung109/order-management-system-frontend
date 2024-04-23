@@ -1,20 +1,16 @@
 import { HttpStatusCode } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { format } from 'date-fns';
 import { ToastrService } from 'ngx-toastr';
 import { catchError, map, startWith, switchMap } from 'rxjs';
 import { HttpResponse } from 'src/app/common/HttpResponse';
-import { UserRole } from 'src/app/common/UserRole';
-import { ManufacturingCost } from 'src/app/model/ManufacturingCost';
 import { Product } from 'src/app/model/Product';
 import { RetailPrice } from 'src/app/model/RetailPrice';
-import { AuthenticationService } from 'src/app/service/authentication.service';
-import { ManufacturingCostService } from 'src/app/service/manufacturing-cost.service';
 import { ProductService } from 'src/app/service/product.service';
 import { RetailPriceService } from 'src/app/service/retail-price.service';
 import { ConfirmDialogComponent } from 'src/app/view/share/confirm-dialog/confirm-dialog.component';
@@ -22,47 +18,42 @@ import { ConfirmDialogComponent } from 'src/app/view/share/confirm-dialog/confir
 @Component({
   selector: 'app-product-retail-price-history',
   templateUrl: './product-retail-price-history.component.html',
-  styleUrls: ['./product-retail-price-history.component.scss']
+  styleUrls: ['./product-retail-price-history.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ProductRetailPriceHistoryComponent implements OnInit {
 
   @ViewChild('paginator') paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  jwtHelperService = new JwtHelperService();
-  allowAction: boolean = false;
   dataSource: MatTableDataSource<RetailPrice> = new MatTableDataSource<RetailPrice>();
-  displayedColumnsForAdmin: string[] = ['index', 'price', 'creationTimestamp', 'action'];
-  displayedColumns: string[] = ['index', 'price', 'creationTimestamp'];
+  displayedColumns: string[] = ['index', 'price', 'creationTimestamp', 'action'];
   pageData: any[] = [];
   pageSizes = [5, 10, 15];
   totalElements: number = 0;
-  id: number = 0;
-  productName: string = "";
+  searchedStartDate: string = "";
+  searchedEndDate: string = "";
+  startDate!: string;
+  endDate!: string;
+  productId: number = 0;
+  productDto: Product = new Product();
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private matDialog: MatDialog,
     private toastrService: ToastrService,
-    private authService: AuthenticationService,
     private productService: ProductService,
     private retailPriceService: RetailPriceService
   ) { }
 
   ngOnInit(): void {
-    let jwtToken = this.authService.fetchJwtToken();
-    let loginRole = this.jwtHelperService.decodeToken(jwtToken).role;
-    if (loginRole == UserRole.ADMIN) {
-      this.allowAction = true;
-    }
-
     this.route.queryParams.subscribe(params => {
-      this.id = Number(params['id']);
+      this.productId = Number(params['productId']);
     });
 
-    this.productService.fetchById(this.id).subscribe({
+    this.productService.fetchById(this.productId).subscribe({
       next: (response: Product) => {
-        this.productName = response.name;
+        this.productDto = response;
       },
       error: (error) => {
         if (error.status == HttpStatusCode.NotFound) {
@@ -74,15 +65,15 @@ export class ProductRetailPriceHistoryComponent implements OnInit {
   }
 
   ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
     this.assignPageData();
   }
 
   assignPageData() {
-    this.dataSource.paginator = this.paginator;
     this.paginator.page.pipe(
       startWith({}),
       switchMap(() => {
-        return this.retailPriceService.fetchPage(this.id, this.paginator.pageIndex + 1, this.paginator.pageSize)
+        return this.retailPriceService.fetchPage(this.productId, this.searchedStartDate, this.searchedEndDate, this.paginator.pageIndex + 1, this.paginator.pageSize)
           .pipe(catchError(() => {
             throw new Error("Error");
           }));
@@ -102,6 +93,23 @@ export class ProductRetailPriceHistoryComponent implements OnInit {
     });
   }
 
+  search(): void {
+    if (this.searchedStartDate) {
+      this.searchedStartDate = format(this.searchedStartDate, "yyyy-MM-dd");
+    }
+    if (this.searchedEndDate) {
+      this.searchedEndDate = format(this.searchedEndDate, "yyyy-MM-dd");
+    }
+
+    if ((this.searchedStartDate && this.searchedEndDate) || (!this.searchedStartDate && !this.searchedEndDate)) {
+      this.totalElements = 0;
+      this.paginator.pageIndex = 0;
+      this.paginator.length = this.totalElements;
+      this.dataSource.paginator = this.paginator;
+      this.assignPageData();
+    }
+  }
+
   delete(id: number): void {
     const dialogRef = this.matDialog.open(ConfirmDialogComponent, {
       width: '300px', data: 'delete'
@@ -109,13 +117,24 @@ export class ProductRetailPriceHistoryComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        if (this.pageData.length == 1) {
+          this.toastrService.warning("There must be at least one retail price, so it cannot be deleted.", "Retail Price Deletion");
+          return;
+        }
+
         this.retailPriceService.delete(id).subscribe({
           next: (response: HttpResponse) => {
+            if (this.pageData.length == 1 && this.paginator.pageIndex != 0) {
+              this.paginator.pageIndex--;
+            }
+
             this.assignPageData();
             this.toastrService.success(response.message, response.title);
           },
           error: (error) => {
-
+            if (error.status == HttpStatusCode.NotFound) {
+              this.toastrService.error(error.error.message, error.error.title);
+            }
           }
         });
       }

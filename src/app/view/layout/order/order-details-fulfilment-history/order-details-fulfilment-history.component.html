@@ -1,0 +1,69 @@
+<div style="width: 90%; margin: 0 auto;">
+  <h5 class="table-header">Product: {{ orderDetailsDto.product!.name }}</h5>
+  <h5 class="table-header">Category: {{ orderDetailsDto.product!.category!.name }}</h5>
+  <h5 class="table-header">Ordered Quantity: {{ (orderDetailsDto.orderedQuantity) | number }}</h5>
+  <h5 class="table-header">Fulfilled Quantity: {{ (orderDetailsDto.fulfilledQuantity) | number }}</h5>
+  <div class="text-center mb-20 mt-20">
+    <h4 class="text-header">Delivery History</h4>
+  </div>
+  <div class="container-fluid mat-elevation-z8 responsive-container">
+    <table mat-table [dataSource]="deliveryDataSource" #deliveryMatSort matSort class="order-details-delivery-history-table w-100">
+      <ng-container matColumnDef="index">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>No.</th>
+        <td mat-cell *matCellDef="let element">{{ element.index }}</td>
+      </ng-container>
+      <ng-container matColumnDef="deliveryRouteId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Delivery Route ID</th>
+        <td mat-cell *matCellDef="let element">{{ element.deliveryRoute?.id }}</td>
+      </ng-container>
+      <ng-container matColumnDef="deliveryDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Delivery Date</th>
+        <td mat-cell *matCellDef="let element">{{ element.deliveryRoute?.deliveryDate }}</td>
+      </ng-container>
+      <ng-container matColumnDef="deliveredQuantity">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Delivered Quantity</th>
+        <td mat-cell *matCellDef="let element">{{ element.deliveredQuantity }}</td>
+      </ng-container>
+      <ng-container matColumnDef="shippingAddress" >
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Shipping Address</th>
+        <td mat-cell *matCellDef="let element">{{ element.shippingAddress?.address }}</td>
+      </ng-container>
+      <ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsForDelivery;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsForDelivery"></tr>
+      </ng-container>
+    </table>
+  </div>
+  <h5 *ngIf="deliveryPageData.length == 0" class="text-danger text-center mb-3 mt-3">No record found!</h5>
+  <div class="text-center mb-20" style="margin-top: 120px;">
+    <h4 class="text-header">Pickup History</h4>
+  </div>
+  <div class="container-fluid mat-elevation-z8 responsive-container">
+    <table mat-table [dataSource]="pickupDataSource" #pickupMatSort matSort class="order-details-pickup-history-table w-100">
+      <ng-container matColumnDef="index">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>No.</th>
+        <td mat-cell *matCellDef="let element">{{ element.index }}</td>
+      </ng-container>
+      <ng-container matColumnDef="pickupId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Pickup ID</th>
+        <td mat-cell *matCellDef="let element">{{ element.pickup?.id }}</td>
+      </ng-container>
+      <ng-container matColumnDef="pickupDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Pickup Date</th>
+        <td mat-cell *matCellDef="let element">{{ element.pickup?.pickupDate }}</td>
+      </ng-container>
+      <ng-container matColumnDef="pickupQuantity">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Pickup Quantity</th>
+        <td mat-cell *matCellDef="let element">{{ element.pickupQuantity }}</td>
+      </ng-container>
+      <ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsForPickup;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsForPickup"></tr>
+      </ng-container>
+    </table>
+  </div>
+  <h5 *ngIf="pickupPageData.length == 0" class="text-danger text-center mb-3 mt-3">No record found!</h5>
+  <div class="button-group back-button-group">
+    <button mat-raised-button color="accent" type="button" class="text-white" (click)="back()">Back to order details</button>
+  </div>
+</div>

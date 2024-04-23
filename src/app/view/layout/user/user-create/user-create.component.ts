@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -24,6 +24,7 @@ import { RandomPasswordService } from 'src/app/service/random-password.service';
 })
 export class UserCreateComponent implements OnInit {
 
+  @ViewChild(FormGroupDirective) formDirective!: FormGroupDirective;
   form!: FormGroup;
   hidePassword: boolean = true;
   hideConfirmPassword: boolean = true;
@@ -89,7 +90,7 @@ export class UserCreateComponent implements OnInit {
 
             moreDialogRef.afterClosed().subscribe(result => {
               if (result) {
-                location.reload();
+                this.reset();
               } else {
                 this.back();
               }
@@ -123,7 +124,8 @@ export class UserCreateComponent implements OnInit {
   }
 
   reset(): void {
-    this.form.reset();
+    this.submitted = false;
+    this.formDirective.resetForm();
   }
 
   back(): void {

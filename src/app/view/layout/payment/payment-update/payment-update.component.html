@@ -1,0 +1,60 @@
+<div class="container-fluid m-0 p-0 d-flex align-items-center justify-content-center">
+  <div class="input-form p-5 col-lg-4 col-md-6 col-sm-7 col-xs-6">
+    <form [formGroup]="form" (ngSubmit)="update()" accept-charset="utf-8" htmlEscape="true" enctype="multipart/form-data" method="POST">
+      <div class="text-center mb-20">
+        <h4 class="text-header">Payment Update</h4>
+      </div>
+      <div class="p-4">
+        <h6><b>OrderID: {{ paymentDto.order.id }}</b></h6>
+        <h6><b>OrderDate: {{ paymentDto.order.orderDate }}</b></h6>
+        <h6><b>Customer: {{ paymentDto.order.customer.name }}</b></h6>
+        <h6><b>Ordered Amount: {{ paymentDto.order.orderedAmount | number }} kyat<span *ngIf="paymentDto.order.orderedAmount > 1">s</span></b></h6>
+        <h6><b>Paid Amount: {{ paymentDto.order.paidAmount | number }} kyat<span *ngIf="paymentDto.order.paidAmount > 1">s</span></b></h6>
+        <h6><b>Remaining Amount: {{ (paymentDto.order.orderedAmount - paymentDto.order.paidAmount) | number }} kyat<span *ngIf="(paymentDto.order.orderedAmount - paymentDto.order.paidAmount) > 1">s</span></b></h6>
+        <br>
+        <!-- Amount -->
+        <mat-form-field appearance="outline">
+          <mat-label>Amount</mat-label>
+          <input type="text" matInput formControlName="amount">
+        </mat-form-field>
+        <mat-error *ngIf="form.controls['amount'].invalid && (form.controls['amount'].touched || form.controls['amount'].dirty || submitted)">
+          <span *ngIf="form.controls['amount'].errors?.['required']" class="d-block">Field is required.</span>
+          <span *ngIf="form.controls['amount'].errors?.['quantityError']" class="d-block">Must be between 1 and {{ remainingAmount }}.</span>
+        </mat-error>
+        <!-- Payment Date -->
+        <mat-form-field appearance="outline">
+          <mat-label>Payment Date</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="paymentDate" readonly>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker disabled="false"></mat-datepicker>
+        </mat-form-field>
+        <mat-error *ngIf="form.controls['paymentDate'].invalid && (form.controls['paymentDate'].touched || form.controls['paymentDate'].dirty || submitted)">
+          <span *ngIf="form.controls['paymentDate'].errors?.['required']" class="d-block">Field is required.</span>
+        </mat-error>
+        <!-- Payment Type -->
+        <mat-form-field appearance="outline">
+          <mat-label>Payment Type</mat-label>
+          <mat-select formControlName="paymentType">
+            <mat-option>None</mat-option>
+            <mat-option [value]="'Cash'">Cash</mat-option>
+            <mat-option [value]="'KBZPay'">KBZPay</mat-option>
+            <mat-option [value]="'Wavepay'">Wavepay</mat-option>
+            <mat-option [value]="'KBZ Bank'">KBZ Bank</mat-option>
+            <mat-option [value]="'Yoma Bank'">Yoma Bank</mat-option>
+            <mat-option [value]="'MAB Bank'">MAB Bank</mat-option>
+            <mat-option [value]="'AYA Bank'">AYA Bank</mat-option>
+            <mat-option [value]="'UAB Bank'">UAB Bank</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-error *ngIf="form.controls['paymentType'].invalid && (form.controls['paymentType'].touched || form.controls['paymentType'].dirty || submitted)">
+          <span *ngIf="form.controls['paymentType'].errors?.['required']" class="d-block">Field is required.</span>
+        </mat-error>
+        <div class="button-group">
+          <button mat-raised-button color="primary" type="submit" class="text-white">Update</button>
+          <button mat-raised-button color="warn" type="button" class="text-white" (click)="reset()">Reset</button>
+          <button mat-raised-button color="accent" type="button" class="text-white" (click)="back()">Back</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

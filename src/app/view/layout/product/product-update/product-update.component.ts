@@ -37,10 +37,6 @@ export class ProductUpdateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      this.id = Number(params['id']);
-    });
-
     this.form = this.fb.group(
       {
         name: ['', [Validators.required, Validators.maxLength(150), Validators.pattern("^[^<>~`!\\[\\]{}|@#^*+=:;?%$\\\\]*$"), startWithSpaceValidator(), customValidator('duplication')]],
@@ -49,6 +45,10 @@ export class ProductUpdateComponent implements OnInit {
         retailPrice: ['', [Validators.required, Validators.pattern("^[1-9][0-9]{0,5}$")]]
       }
     );
+
+    this.route.queryParams.subscribe(params => {
+      this.id = Number(params['id']);
+    });
 
     this.categoryService.fetchAll().subscribe(data => {
       this.categoryList = data;
@@ -98,10 +98,10 @@ export class ProductUpdateComponent implements OnInit {
             this.toastrService.success(response.message, response.title);
           },
           error: (error) => {
-            if (error.status == HttpStatusCode.Conflict) {
-              if (error.error.message == "Duplicated Name") {
-                this.form.get('name')!.setErrors({ required: false, duplication: true });
-              }
+            if (error.status == HttpStatusCode.NotFound) {
+              this.toastrService.error(error.error.message, error.error.title);
+            } else if (error.status == HttpStatusCode.Conflict) {
+              this.form.get('name')!.setErrors({ required: false, duplication: true });
             }
           }
         });

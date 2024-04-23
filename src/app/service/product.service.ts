@@ -19,6 +19,10 @@ export class ProductService {
     return this.http.get<Product>(`${environment.baseUrl}/product/findById?id=${id}`, { responseType: "json" });
   }
 
+  fetchByCategoryId(categoryId: number): Observable<Product[]> {
+    return this.http.get<Product[]>(`${environment.baseUrl}/product/findByCategoryId?categoryId=${categoryId}`, { responseType: "json" });
+  }
+
   fetchPage(categoryName: string = "", keyword: string = "", pageNo: number = 1, pageSize: number = 5): Observable<PaginationResponse<Product>> {
     return this.http.get<PaginationResponse<Product>>(`${environment.baseUrl}/product/findPage?categoryName=${categoryName}&keyword=${keyword}&pageNo=${pageNo}&pageSize=${pageSize}`, { responseType: "json" });
   }

@@ -1,0 +1,138 @@
+<div class="container-fluid m-0 p-0 d-flex align-items-center justify-content-center">
+  <div class="input-form p-5 col-lg-4 col-md-6 col-sm-7 col-xs-6">
+    <form [formGroup]="form" (ngSubmit)="submit()" accept-charset="utf-8" htmlEscape="true" enctype="multipart/form-data" method="POST">
+      <div class="text-center mb-20">
+        <h4 class="text-header" *ngIf="action === 'create'">Order Details Creation</h4>
+        <h4 class="text-header" *ngIf="action === 'update'">Order Details Update</h4>
+      </div>
+      <div class="p-4">
+        <!-- Category -->
+        <mat-form-field appearance="outline">
+          <mat-label>Category</mat-label>
+          <mat-select formControlName="category" (selectionChange)="changeProduct($event.value)">
+            <mat-option>None</mat-option>
+            <mat-option *ngFor="let category of categoryList" [value]="category">{{ category.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-error *ngIf="form.controls['category'].invalid && (form.controls['category'].touched || form.controls['category'].dirty || submitted)">
+          <span *ngIf="form.controls['category'].errors?.['required']" class="d-block">Field is required.</span>
+        </mat-error>
+        <!-- Product -->
+        <mat-form-field appearance="outline">
+          <mat-label>Product</mat-label>
+          <mat-select formControlName="product" (selectionChange)="changeUnitPrice($event.value)">
+            <mat-option>None</mat-option>
+            <mat-option *ngFor="let product of productList" [value]="product">{{ product.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-error *ngIf="form.controls['product'].invalid && (form.controls['product'].touched || form.controls['product'].dirty || submitted)">
+          <span *ngIf="form.controls['product'].errors?.['required']" class="d-block">Field is required.</span>
+        </mat-error>
+        <!-- Quantity -->
+        <mat-form-field appearance="outline">
+          <mat-label>Quantity</mat-label>
+          <input type="text" matInput formControlName="quantity">
+        </mat-form-field>
+        <mat-error *ngIf="form.controls['quantity'].invalid && (form.controls['quantity'].touched || form.controls['quantity'].dirty || submitted)">
+          <span *ngIf="form.controls['quantity'].errors?.['required']" class="d-block">Field is required.</span>
+          <span *ngIf="form.controls['quantity'].errors?.['pattern']" class="d-block">Must be between 1 and 999999.</span>
+        </mat-error>
+        <!-- Unit Price -->
+        <mat-form-field appearance="outline">
+          <mat-label>Unit Price</mat-label>
+          <input type="text" matInput formControlName="unitPrice">
+        </mat-form-field>
+        <mat-error *ngIf="form.controls['unitPrice'].invalid && (form.controls['unitPrice'].touched || form.controls['unitPrice'].dirty || submitted)">
+          <span *ngIf="form.controls['unitPrice'].errors?.['required']" class="d-block">Field is required.</span>
+          <span *ngIf="form.controls['unitPrice'].errors?.['pattern']" class="d-block">Must be between 1 and 999999.</span>
+        </mat-error>
+        <div class="button-group">
+          <button mat-raised-button color="primary" type="submit" class="text-white" *ngIf="action === 'create'">Create</button>
+          <button mat-raised-button color="primary" type="submit" class="text-white" *ngIf="action === 'update'">Update</button>
+          <button mat-raised-button color="warn" type="button" class="text-white" (click)="reset()">Reset</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div style="width: 90%; margin: 0 auto 150px;">
+  <h5 class="table-header">Order ID: {{ orderDto.id }}</h5>
+  <h5 class="table-header">Order Date: {{ orderDto.orderDate }}</h5>
+  <h5 class="table-header">Customer: {{ orderDto.customer.name }}</h5>
+  <div class="container-fluid mat-elevation-z8 responsive-container">
+    <table mat-table [dataSource]="dataSource" matSort class="order-details-table w-100">
+      <ng-container matColumnDef="index">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>No.</th>
+        <td mat-cell *matCellDef="let element">{{ element.index }}</td>
+      </ng-container>
+      <ng-container matColumnDef="product">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Product</th>
+        <td mat-cell *matCellDef="let element">{{ element.product?.name }}</td>
+      </ng-container>
+      <ng-container matColumnDef="category">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+        <td mat-cell *matCellDef="let element">{{ element.product?.category?.name }}</td>
+      </ng-container>
+      <ng-container matColumnDef="fulfilmentStatus">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Fulfilment Status</th>
+        <td mat-cell *matCellDef="let element">{{ element.fulfilmentStatus }}</td>
+      </ng-container>
+      <ng-container matColumnDef="orderedQuantity">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Ordered Quantity</th>
+        <td mat-cell *matCellDef="let element">{{ (element.orderedQuantity) | number }}</td>
+      </ng-container>
+      <ng-container matColumnDef="fulfilledQuantity">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Fulfilled Quantity</th>
+        <td mat-cell *matCellDef="let element">{{ (element.fulfilledQuantity) | number }}</td>
+      </ng-container>
+      <ng-container matColumnDef="sellingPrice">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Selling Price</th>
+        <td mat-cell *matCellDef="let element">{{ (element.sellingPrice) | number }}</td>
+      </ng-container>
+      <ng-container matColumnDef="manufacturingCost">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Manufacturing Cost</th>
+        <td mat-cell *matCellDef="let element">{{ (element.manufacturingCost) | number }}</td>
+      </ng-container>
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
+        <td mat-cell *matCellDef="let element">{{ (element.amount) | number }}</td>
+      </ng-container>
+      <ng-container matColumnDef="profit">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Profit</th>
+        <td mat-cell *matCellDef="let element">{{ (element.profit) | number }}</td>
+      </ng-container>
+      <ng-container matColumnDef="fulfilmentHistory">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>View Fulfilment History</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-raised-button color="primary" type="button" class="text-white me-3" (click)="navigateToFulfilmentHistory(element.id)">Fulfilment History</button>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon style="cursor: pointer" (click)="edit(element.id)">edit</mat-icon>
+          <mat-icon style="cursor: pointer" (click)="delete(element.id)">delete</mat-icon>
+        </td>
+      </ng-container>
+      <ng-container *ngIf="loginRole == 'ADMIN'">
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsForAdmin;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsForAdmin"></tr>
+      </ng-container>
+      <ng-container *ngIf="loginRole == 'SALES_STAFF'">
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsForSalesStaff;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsForSalesStaff"></tr>
+      </ng-container>
+      <ng-container *ngIf="loginRole == 'DELIVERY_MANAGER'">
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsForDeliveryManager;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsForDeliveryManager"></tr>
+      </ng-container>
+    </table>
+  </div>
+  <h5 *ngIf="pageData.length == 0" class="text-danger text-center mb-3 mt-3">No record found!</h5>
+  <div class="clearfix">
+    <h5 class="float-end fw-bold">Total Amount: {{ orderDto.orderedAmount | number }} kyat<span *ngIf="orderDto.orderedAmount > 0">s</span></h5>
+  </div>
+  <div class="button-group back-button-group">
+    <button mat-raised-button color="accent" type="button" class="text-white" (click)="back()">Back to order list</button>
+  </div>
+</div>

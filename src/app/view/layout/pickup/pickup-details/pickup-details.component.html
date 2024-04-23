@@ -1,0 +1,75 @@
+<div class="container-fluid m-0 p-0 d-flex align-items-center justify-content-center">
+  <div class="input-form p-5 col-lg-4 col-md-6 col-sm-7 col-xs-6">
+    <form [formGroup]="form" (ngSubmit)="update()" accept-charset="utf-8" htmlEscape="true" enctype="multipart/form-data" method="POST">
+      <div class="text-center mb-20">
+        <h4 class="text-header">Pickup Details Update</h4>
+      </div>
+      <div class="p-4">
+        <!-- Pickup Quantity -->
+        <mat-form-field appearance="outline">
+          <mat-label>Pickup Quantity</mat-label>
+          <input type="text" matInput formControlName="pickupQuantity">
+        </mat-form-field>
+        <mat-error *ngIf="form.controls['pickupQuantity'].invalid && (form.controls['pickupQuantity'].touched || form.controls['pickupQuantity'].dirty || submitted)">
+          <span *ngIf="form.controls['pickupQuantity'].errors?.['required']" class="d-block">Field is required.</span>
+          <span *ngIf="form.controls['pickupQuantity'].errors?.['quantityError']" class="d-block">Must be between 1 and {{ maxQuantity }}.</span>
+        </mat-error>
+        <div class="button-group">
+          <button mat-raised-button color="primary" type="submit" class="text-white" [disabled]="disable">Update</button>
+          <button mat-raised-button color="warn" type="button" class="text-white" (click)="reset()" [disabled]="disable">Reset</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div style="width: 90%; margin: 0 auto 150px;">
+  <h5 class="table-header">Pickup ID: {{ pickupDto.id }}</h5>
+  <h5 class="table-header">Pickup Date: {{ pickupDto.pickupDate }}</h5>
+  <div class="container-fluid mat-elevation-z8 responsive-container">
+    <table mat-table [dataSource]="dataSource" matSort class="pickup-details-table w-100">
+      <ng-container matColumnDef="index">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>No.</th>
+        <td mat-cell *matCellDef="let element">{{ element.index }}</td>
+      </ng-container>
+      <ng-container matColumnDef="orderId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Order ID</th>
+        <td mat-cell *matCellDef="let element">{{ element.orderDetails?.order?.id }}</td>
+      </ng-container>
+      <ng-container matColumnDef="customer">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Customer</th>
+        <td mat-cell *matCellDef="let element">{{ element.orderDetails?.order?.customer?.name }}</td>
+      </ng-container>
+      <ng-container matColumnDef="orderDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Order Date</th>
+        <td mat-cell *matCellDef="let element">{{ element.orderDetails?.order?.orderDate }}</td>
+      </ng-container>
+      <ng-container matColumnDef="product">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Product</th>
+        <td mat-cell *matCellDef="let element">{{ element.orderDetails?.product?.name }}</td>
+      </ng-container>
+      <ng-container matColumnDef="category">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+        <td mat-cell *matCellDef="let element">{{ element.orderDetails?.product?.category?.name }}</td>
+      </ng-container>
+      <ng-container matColumnDef="pickupQuantity">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Pickup Quantity</th>
+        <td mat-cell *matCellDef="let element">{{ element.pickupQuantity }}</td>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon style="cursor: pointer" (click)="edit(element.id)">edit</mat-icon>
+          <mat-icon style="cursor: pointer" (click)="delete(element.id)">delete</mat-icon>
+        </td>
+      </ng-container>
+      <ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </ng-container>
+    </table>
+  </div>
+  <h5 *ngIf="pageData.length == 0" class="text-danger text-center mb-3 mt-3">No record found!</h5>
+  <div class="button-group back-button-group">
+    <button mat-raised-button color="accent" type="button" class="text-white" (click)="back()">Back to pickup list</button>
+  </div>
+</div>

@@ -15,8 +15,8 @@ export class RetailPriceService {
     private http: HttpClient
   ) { }
 
-  fetchPage(productId: number, pageNo: number = 1, pageSize: number = 5): Observable<PaginationResponse<RetailPrice>> {
-    return this.http.get<PaginationResponse<RetailPrice>>(`${environment.baseUrl}/retailPrice/findPage?productId=${productId}&pageNo=${pageNo}&pageSize=${pageSize}`, { responseType: "json" });
+  fetchPage(productId: number, startDate: string = "", endDate: string = "", pageNo: number = 1, pageSize: number = 5): Observable<PaginationResponse<RetailPrice>> {
+    return this.http.get<PaginationResponse<RetailPrice>>(`${environment.baseUrl}/retailPrice/findPage?productId=${productId}&startDate=${startDate}&endDate=${endDate}&pageNo=${pageNo}&pageSize=${pageSize}`, { responseType: "json" });
   }
 
   delete(id: number): Observable<HttpResponse> {

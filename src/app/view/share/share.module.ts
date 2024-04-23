@@ -12,8 +12,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { PasswordDialogComponent } from './password-dialog/password-dialog.component';
 
-
-
 @NgModule({
   declarations: [
     SpinnerComponent,

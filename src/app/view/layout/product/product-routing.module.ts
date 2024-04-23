@@ -38,7 +38,7 @@ const routes: Routes = [
     canActivate: [authGuard],
     data: {
       breadcrumb: 'list',
-      allowedUserRoles: [UserRole.ADMIN, UserRole.DELIVERY_MANAGER]
+      allowedUserRoles: [UserRole.ADMIN, UserRole.DELIVERY_MANAGER, UserRole.SALES_STAFF]
     }
   },
   {
@@ -47,7 +47,7 @@ const routes: Routes = [
     canActivate: [authGuard],
     data: {
       breadcrumb: 'manufacturing-cost-history',
-      allowedUserRoles: [UserRole.ADMIN, UserRole.DELIVERY_MANAGER]
+      allowedUserRoles: [UserRole.ADMIN]
     }
   },
   {
@@ -56,7 +56,7 @@ const routes: Routes = [
     canActivate: [authGuard],
     data: {
       breadcrumb: 'retail-price-history',
-      allowedUserRoles: [UserRole.ADMIN, UserRole.DELIVERY_MANAGER]
+      allowedUserRoles: [UserRole.ADMIN]
     }
   }
 ];

@@ -1,0 +1,37 @@
+.mat-mdc-form-field .mdc-text-field--outlined .mdc-notched-outline--upgraded .mdc-floating-label--float-above {
+  padding-right: 14px;
+}
+
+.responsive-container .mat-column-index .mat-sort-header-container {
+  width: 70px;
+  max-width: 70px;
+  word-wrap: break-word;
+}
+
+.responsive-container .mat-column-id .mat-sort-header-container {
+  width: 150px;
+  max-width: 150px;
+  word-wrap: break-word;
+}
+
+.responsive-container .mat-column-deliveryDate .mat-sort-header-container {
+  width: 150px;
+  max-width: 150px;
+  word-wrap: break-word;
+}
+
+.responsive-container .mat-column-deliveryRouteDetails .mat-sort-header-container {
+  width: 200px;
+  max-width: 200px;
+  word-wrap: break-word;
+}
+
+.responsive-container .mat-column-action .mat-sort-header-container {
+  width: 50px;
+  max-width: 50px;
+  word-wrap: break-word;
+}
+
+.delivery-route-list-table {
+  min-width: 650px !important;
+}
