@@ -1,0 +1,33 @@
+.responsive-container .mat-column-index .mat-sort-header-container {
+  width: 70px;
+  max-width: 70px;
+  word-wrap: break-word;
+}
+
+.responsive-container .mat-column-paymentDate .mat-sort-header-container {
+  width: 150px;
+  max-width: 150px;
+  word-wrap: break-word;
+}
+
+.responsive-container .mat-column-paymentType .mat-sort-header-container {
+  width: 150px;
+  max-width: 150px;
+  word-wrap: break-word;
+}
+
+.responsive-container .mat-column-amount .mat-sort-header-container {
+  width: 150px;
+  max-width: 150px;
+  word-wrap: break-word;
+}
+
+.order-payment-history-table {
+  min-width: 550px !important;
+}
+
+.back-button-group {
+  float: right;
+  margin-top: 20px !important;
+  margin-bottom: 100px !important;
+}

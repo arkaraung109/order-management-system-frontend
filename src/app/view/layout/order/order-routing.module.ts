@@ -7,6 +7,7 @@ import { OrderUpdateComponent } from './order-update/order-update.component';
 import { OrderListComponent } from './order-list/order-list.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { OrderDetailsFulfilmentHistoryComponent } from './order-details-fulfilment-history/order-details-fulfilment-history.component';
+import { OrderPaymentHistoryComponent } from './order-payment-history/order-payment-history.component';
 
 const routes: Routes = [
   {
@@ -48,6 +49,15 @@ const routes: Routes = [
     data: {
       breadcrumb: 'details',
       allowedUserRoles: [UserRole.ADMIN, UserRole.DELIVERY_MANAGER, UserRole.SALES_STAFF]
+    }
+  },
+  {
+    path: 'payment-history',
+    component: OrderPaymentHistoryComponent,
+    canActivate: [authGuard],
+    data: {
+      breadcrumb: 'details',
+      allowedUserRoles: [UserRole.ADMIN, UserRole.SALES_STAFF]
     }
   },
   {

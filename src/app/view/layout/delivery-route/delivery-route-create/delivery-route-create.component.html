@@ -20,35 +20,31 @@
             </mat-checkbox>
           </td>
         </ng-container>
-        <ng-container matColumnDef="no">
+        <ng-container matColumnDef="nonSortIndex">
           <th mat-header-cell *matHeaderCellDef>No.</th>
           <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
         </ng-container>
-        <ng-container matColumnDef="orderId">
+        <ng-container matColumnDef="nonSortOrderId">
           <th mat-header-cell *matHeaderCellDef>Order ID</th>
           <td mat-cell *matCellDef="let element">{{ element.order?.id }}</td>
         </ng-container>
-        <ng-container matColumnDef="customer">
+        <ng-container matColumnDef="nonSortCustomer">
           <th mat-header-cell *matHeaderCellDef>Customer</th>
           <td mat-cell *matCellDef="let element">{{ element.order?.customer?.name }}</td>
         </ng-container>
-        <ng-container matColumnDef="orderDate">
+        <ng-container matColumnDef="nonSortOrderDate">
           <th mat-header-cell *matHeaderCellDef>Order Date</th>
           <td mat-cell *matCellDef="let element">{{ element.order?.orderDate }}</td>
         </ng-container>
-        <ng-container matColumnDef="product">
+        <ng-container matColumnDef="nonSortProduct">
           <th mat-header-cell *matHeaderCellDef>Product</th>
           <td mat-cell *matCellDef="let element">{{ element.product?.name }}</td>
         </ng-container>
-        <ng-container matColumnDef="category">
-          <th mat-header-cell *matHeaderCellDef>Category</th>
-          <td mat-cell *matCellDef="let element">{{ element.product?.category?.name }}</td>
-        </ng-container>
-        <ng-container matColumnDef="quantity">
+        <ng-container matColumnDef="nonSortQuantity">
           <th mat-header-cell *matHeaderCellDef>Quantity</th>
           <td mat-cell *matCellDef="let element">{{ element.quantity }}</td>
         </ng-container>
-        <ng-container matColumnDef="deliveredQuantity" formArrayName="formArray">
+        <ng-container matColumnDef="nonSortDeliveredQuantity" formArrayName="formArray">
           <th mat-header-cell *matHeaderCellDef>Delivered Quantity</th>
           <td mat-cell *matCellDef="let element; let i = index" [formGroupName]="i">
             <mat-form-field appearance="outline">
@@ -61,7 +57,7 @@
             </mat-error>
           </td>
         </ng-container>
-        <ng-container matColumnDef="shippingAddress" formArrayName="formArray">
+        <ng-container matColumnDef="nonSortShippingAddress" formArrayName="formArray">
           <th mat-header-cell *matHeaderCellDef>Shipping Address</th>
           <td mat-cell *matCellDef="let element; let i = index" [formGroupName]="i">
             <mat-form-field appearance="outline">
@@ -114,35 +110,31 @@
         </div>
       </div>
       <table mat-table [dataSource]="cartDataSource" class="delivery-route-create-table2 w-100">
-        <ng-container matColumnDef="no">
+        <ng-container matColumnDef="nonSortIndex">
           <th mat-header-cell *matHeaderCellDef>No.</th>
           <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
         </ng-container>
-        <ng-container matColumnDef="orderId">
+        <ng-container matColumnDef="nonSortOrderId">
           <th mat-header-cell *matHeaderCellDef>Order ID</th>
           <td mat-cell *matCellDef="let element">{{ element.order?.id }}</td>
         </ng-container>
-        <ng-container matColumnDef="customer">
+        <ng-container matColumnDef="nonSortCustomer">
           <th mat-header-cell *matHeaderCellDef>Customer</th>
           <td mat-cell *matCellDef="let element">{{ element.order?.customer?.name }}</td>
         </ng-container>
-        <ng-container matColumnDef="orderDate">
+        <ng-container matColumnDef="nonSortOrderDate">
           <th mat-header-cell *matHeaderCellDef>Order Date</th>
           <td mat-cell *matCellDef="let element">{{ element.order?.orderDate }}</td>
         </ng-container>
-        <ng-container matColumnDef="product">
+        <ng-container matColumnDef="nonSortProduct">
           <th mat-header-cell *matHeaderCellDef>Product</th>
           <td mat-cell *matCellDef="let element">{{ element.product?.name }}</td>
         </ng-container>
-        <ng-container matColumnDef="category">
-          <th mat-header-cell *matHeaderCellDef>Category</th>
-          <td mat-cell *matCellDef="let element">{{ element.product?.category?.name }}</td>
-        </ng-container>
-        <ng-container matColumnDef="deliveredQuantity">
+        <ng-container matColumnDef="nonSortDeliveredQuantity">
           <th mat-header-cell *matHeaderCellDef>Delivered Quantity</th>
           <td mat-cell *matCellDef="let element">{{ element.deliveredQuantity }}</td>
         </ng-container>
-        <ng-container matColumnDef="shippingAddress" >
+        <ng-container matColumnDef="nonSortShippingAddress" >
           <th mat-header-cell *matHeaderCellDef>Shipping Address</th>
           <td mat-cell *matCellDef="let element">{{ element.shippingAddress?.address }}</td>
         </ng-container>

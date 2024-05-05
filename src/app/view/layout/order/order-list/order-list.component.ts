@@ -10,7 +10,6 @@ import { format } from 'date-fns';
 import { ToastrService } from 'ngx-toastr';
 import { catchError, map, startWith, switchMap } from 'rxjs';
 import { HttpResponse } from 'src/app/common/HttpResponse';
-import { UserRole } from 'src/app/common/UserRole';
 import { Customer } from 'src/app/model/Customer';
 import { Order } from 'src/app/model/Order';
 import { AuthenticationService } from 'src/app/service/authentication.service';
@@ -31,8 +30,8 @@ export class OrderListComponent implements OnInit {
   jwtHelperService = new JwtHelperService();
   loginRole: any;
   dataSource: MatTableDataSource<Order> = new MatTableDataSource<Order>();
-  displayedColumnsForAdmin: string[] = ['index', 'id', 'orderDate', 'customer', 'fulfilmentStatus', 'paymentStatus', 'orderedAmount', 'paidAmount', 'remainingAmount', 'profit', 'user', 'orderDetails', 'action'];
-  displayedColumnsForSalesStaff: string[] = ['index', 'id', 'orderDate', 'customer', 'fulfilmentStatus', 'paymentStatus', 'orderedAmount', 'paidAmount', 'remainingAmount', 'user', 'orderDetails', 'action'];
+  displayedColumnsForAdmin: string[] = ['index', 'id', 'orderDate', 'customer', 'fulfilmentStatus', 'paymentStatus', 'orderedAmount', 'paidAmount', 'remainingAmount', 'profit', 'user', 'orderDetails', 'paymentHistory', 'action'];
+  displayedColumnsForSalesStaff: string[] = ['index', 'id', 'orderDate', 'customer', 'fulfilmentStatus', 'paymentStatus', 'orderedAmount', 'paidAmount', 'remainingAmount', 'user', 'orderDetails', 'paymentHistory', 'action'];
   displayedColumnsForDeliveryManager: string[] = ['index', 'id', 'orderDate', 'customer', 'fulfilmentStatus', 'paymentStatus', 'orderedAmount', 'paidAmount', 'remainingAmount', 'user', 'orderDetails'];
   pageData: any[] = [];
   pageSizes = [5, 10, 15];
@@ -140,6 +139,9 @@ export class OrderListComponent implements OnInit {
           case 'fulfilmentStatus': return element.fulfilmentStatus;
           case 'paymentStatus': return element.paymentStatus;
           case 'orderedAmount': return element.orderedAmount;
+          case 'paidAmount': return element.paidAmount;
+          case 'remainingAmount': return element.orderedAmount - element.paidAmount;
+          case 'profit': return element.profit;
           case 'user': return element.user?.name;
           default: return 0;
         }
@@ -240,6 +242,33 @@ export class OrderListComponent implements OnInit {
         localStorage.setItem("paymentStatus", this.searchedPaymentStatus);
         this.router.navigate(
           ['/app/order/details'],
+          {
+            queryParams: {
+              orderId: id
+            }
+          }
+        );
+      },
+      error: (error) => {
+        if (error.status == HttpStatusCode.NotFound) {
+          this.toastrService.error(error.error.message, error.error.title);
+        }
+      }
+    });
+  }
+
+  navigateToPaymentHistory(id: string): void {
+    this.orderService.fetchById(id).subscribe({
+      next: (response: Order) => {
+        localStorage.setItem("pageIndex", this.paginator.pageIndex.toString());
+        localStorage.setItem("pageSize", this.paginator.pageSize.toString());
+        localStorage.setItem("customerName", this.searchedCustomerName);
+        localStorage.setItem("startDate", this.searchedStartDate);
+        localStorage.setItem("endDate", this.searchedEndDate);
+        localStorage.setItem("fulfilmentStatus", this.searchedFulfilmentStatus);
+        localStorage.setItem("paymentStatus", this.searchedPaymentStatus);
+        this.router.navigate(
+          ['/app/order/payment-history'],
           {
             queryParams: {
               orderId: id

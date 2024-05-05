@@ -23,7 +23,7 @@ export class OrderDetailsService {
   }
 
   fetchNotFulfilledByOrderId(orderId: string): Observable<OrderDetails[]> {
-    return this.http.get<OrderDetails[]>(`${environment.baseUrl}/orderDetails/findNotFulfilled?orderId=${orderId}`, { responseType: "json" });
+    return this.http.get<OrderDetails[]>(`${environment.baseUrl}/orderDetails/findNotFulfilledByOrderId?orderId=${orderId}`, { responseType: "json" });
   }
 
   fetchByOrderId(orderId: string): Observable<OrderDetails[]> {

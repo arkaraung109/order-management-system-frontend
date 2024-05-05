@@ -74,6 +74,12 @@
   word-wrap: break-word;
 }
 
+.responsive-container .mat-column-paymentHistory .mat-sort-header-container {
+  width: 180px;
+  max-width: 180px;
+  word-wrap: break-word;
+}
+
 .responsive-container .mat-column-action .mat-sort-header-container {
   width: 50px;
   max-width: 50px;
@@ -81,7 +87,7 @@
 }
 
 .order-list-table {
-  min-width: 1950px !important;
+  min-width: 2150px !important;
 }
 
 .mdc-text-field--filled:not(.mdc-text-field--disabled) {

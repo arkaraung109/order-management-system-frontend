@@ -29,6 +29,11 @@
         <mat-error *ngIf="form.controls['customer'].invalid && (form.controls['customer'].touched || form.controls['customer'].dirty || submitted)">
           <span *ngIf="form.controls['customer'].errors?.['required']" class="d-block">Field is required.</span>
         </mat-error>
+        <!-- Remark -->
+        <mat-form-field appearance="outline">
+          <mat-label>Remark</mat-label>
+          <input type="text" matInput formControlName="remark">
+        </mat-form-field>
         <div class="button-group">
           <button mat-raised-button color="primary" type="submit" class="text-white">Update</button>
           <button mat-raised-button color="warn" type="button" class="text-white" (click)="reset()">Reset</button>

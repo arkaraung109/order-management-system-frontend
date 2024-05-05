@@ -21,6 +21,10 @@ export class OrderService {
     return this.http.get<Order>(`${environment.baseUrl}/order/findById?id=${id}`, { responseType: "json" });
   }
 
+  fetchNotFulfilled(): Observable<Order[]> {
+    return this.http.get<Order[]>(`${environment.baseUrl}/order/findNotFulfilled`, { responseType: "json" });
+  }
+
   fetchPage(customerName: string = "", startDate: string = "", endDate: string = "", fulfilmentStatus: string = "", paymentStatus: string = "", pageNo: number = 1, pageSize: number = 5): Observable<PaginationResponse<Order>> {
     return this.http.get<PaginationResponse<Order>>(`${environment.baseUrl}/order/findPage?customerName=${customerName}&startDate=${startDate}&endDate=${endDate}&fulfilmentStatus=${fulfilmentStatus}&paymentStatus=${paymentStatus}&pageNo=${pageNo}&pageSize=${pageSize}`, { responseType: "json" });
   }

@@ -7,6 +7,7 @@ export class Order {
   orderedAmount!: number;
   paidAmount!: number;
   profit!: number;
+  remark!: string;
   fulfilmentStatus!: string;
   paymentStatus!: string;
   customer: Customer = new Customer();

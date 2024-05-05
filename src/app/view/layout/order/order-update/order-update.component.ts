@@ -40,7 +40,8 @@ export class OrderUpdateComponent implements OnInit {
     this.form = this.fb.group(
       {
         orderDate: ['', Validators.required],
-        customer: ['', Validators.required]
+        customer: ['', Validators.required],
+        remark: [null]
       }
     );
 
@@ -56,6 +57,7 @@ export class OrderUpdateComponent implements OnInit {
       next: (response: Order) => {
         this.form.get('orderDate')!.setValue(response.orderDate);
         this.form.get('customer')!.setValue(response.customer.id);
+        this.form.get('remark')!.setValue(response.remark);
         this.orderDto = response;
       },
       error: (error) => {
@@ -83,6 +85,7 @@ export class OrderUpdateComponent implements OnInit {
         requestDto.id = this.orderDto.id;
         requestDto.orderDate = format(this.form.get('orderDate')!.value, "yyyy-MM-dd");
         requestDto.customer.id = this.form.get('customer')!.value;
+        requestDto.remark = this.form.get('remark')!.value;
 
         this.orderService.update(requestDto).subscribe({
           next: (response: HttpResponse) => {
@@ -104,7 +107,8 @@ export class OrderUpdateComponent implements OnInit {
   reset(): void {
     this.form.setValue({
       orderDate: this.orderDto.orderDate,
-      customer: this.orderDto.customer.id
+      customer: this.orderDto.customer.id,
+      remark: this.orderDto.remark
     });
   }
 

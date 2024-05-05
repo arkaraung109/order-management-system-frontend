@@ -34,8 +34,8 @@ export class DeliveryRouteCreateComponent implements OnInit {
   saved: boolean = false;
   dataSource: MatTableDataSource<OrderDetails> = new MatTableDataSource<OrderDetails>();
   cartDataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['select', 'no', 'orderId', 'customer', 'orderDate', 'product', 'category', 'quantity', 'deliveredQuantity', 'shippingAddress'];
-  displayedColumnsForCart: string[] = ['no', 'orderId', 'customer', 'orderDate', 'product', 'category', 'deliveredQuantity', 'shippingAddress'];
+  displayedColumns: string[] = ['select', 'nonSortIndex', 'nonSortOrderId', 'nonSortCustomer', 'nonSortOrderDate', 'nonSortProduct', 'nonSortQuantity', 'nonSortDeliveredQuantity', 'nonSortShippingAddress'];
+  displayedColumnsForCart: string[] = ['nonSortIndex', 'nonSortOrderId', 'nonSortCustomer', 'nonSortOrderDate', 'nonSortProduct', 'nonSortDeliveredQuantity', 'nonSortShippingAddress'];
   elementArray: any[] = [];
   allElementArray: any[] = [];
   pageData: any[] = [];

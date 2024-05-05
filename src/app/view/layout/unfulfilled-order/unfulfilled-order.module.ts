@@ -1,11 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { OrderRoutingModule } from './order-routing.module';
-import { OrderComponent } from './order.component';
-import { OrderCreateComponent } from './order-create/order-create.component';
-import { OrderListComponent } from './order-list/order-list.component';
-import { OrderDetailsComponent } from './order-details/order-details.component';
-import { OrderUpdateComponent } from './order-update/order-update.component';
+import { UnfulfilledOrderRoutingModule } from './unfulfilled-order-routing.module';
+import { UnfulfilledOrderComponent } from './unfulfilled-order.component';
+import { UnfulfilledOrderListComponent } from './unfulfilled-order-list/unfulfilled-order-list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ShareModule } from '../../share/share.module';
 import { MatButtonModule } from '@angular/material/button';
@@ -19,22 +16,15 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { PipeModule } from 'src/app/pipe/pipe.module';
-import { OrderDetailsFulfilmentHistoryComponent } from './order-details-fulfilment-history/order-details-fulfilment-history.component';
-import { OrderPaymentHistoryComponent } from './order-payment-history/order-payment-history.component';
 
 @NgModule({
   declarations: [
-    OrderComponent,
-    OrderCreateComponent,
-    OrderListComponent,
-    OrderDetailsComponent,
-    OrderUpdateComponent,
-    OrderDetailsFulfilmentHistoryComponent,
-    OrderPaymentHistoryComponent
+    UnfulfilledOrderComponent,
+    UnfulfilledOrderListComponent
   ],
   imports: [
     CommonModule,
-    OrderRoutingModule,
+    UnfulfilledOrderRoutingModule,
     ReactiveFormsModule,
     FormsModule,
     ShareModule,
@@ -53,4 +43,4 @@ import { OrderPaymentHistoryComponent } from './order-payment-history/order-paym
     MatDatepickerModule
   ]
 })
-export class OrderModule { }
+export class UnfulfilledOrderModule { }

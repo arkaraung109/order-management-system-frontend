@@ -95,6 +95,12 @@
           <button mat-raised-button color="primary" type="button" class="text-white" (click)="navigateToOrderDetails(element.id)">Order Details</button>
         </td>
       </ng-container>
+      <ng-container matColumnDef="paymentHistory">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>View Payment History</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-raised-button color="primary" type="button" class="text-white" (click)="navigateToPaymentHistory(element.id)">Payment History</button>
+        </td>
+      </ng-container>
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
         <td mat-cell *matCellDef="let element">

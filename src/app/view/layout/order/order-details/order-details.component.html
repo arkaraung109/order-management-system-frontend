@@ -59,6 +59,7 @@
   <h5 class="table-header">Order ID: {{ orderDto.id }}</h5>
   <h5 class="table-header">Order Date: {{ orderDto.orderDate }}</h5>
   <h5 class="table-header">Customer: {{ orderDto.customer.name }}</h5>
+  <h5 class="table-header" *ngIf="orderDto.remark">Remark: {{ orderDto.remark }}</h5>
   <div class="container-fluid mat-elevation-z8 responsive-container">
     <table mat-table [dataSource]="dataSource" matSort class="order-details-table w-100">
       <ng-container matColumnDef="index">

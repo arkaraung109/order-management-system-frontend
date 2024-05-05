@@ -1,0 +1,36 @@
+<div style="width: 90%; margin: 0 auto;">
+  <h5 class="table-header">Order ID: {{ orderDto.id }}</h5>
+  <h5 class="table-header">Order Date: {{ orderDto.orderDate }}</h5>
+  <h5 class="table-header">Customer: {{ orderDto.customer.name }}</h5>
+  <div class="text-center mb-20 mt-20">
+    <h4 class="text-header">Payment History</h4>
+  </div>
+  <div class="container-fluid mat-elevation-z8 responsive-container">
+    <table mat-table [dataSource]="dataSource" matSort class="order-payment-history-table w-100">
+      <ng-container matColumnDef="index">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>No.</th>
+        <td mat-cell *matCellDef="let element">{{ element.index }}</td>
+      </ng-container>
+      <ng-container matColumnDef="paymentDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Payment Date</th>
+        <td mat-cell *matCellDef="let element">{{ element.paymentDate }}</td>
+      </ng-container>
+      <ng-container matColumnDef="paymentType">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Payment Type</th>
+        <td mat-cell *matCellDef="let element">{{ element.paymentType }}</td>
+      </ng-container>
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
+        <td mat-cell *matCellDef="let element">{{ (element.amount) | number }}</td>
+      </ng-container>
+      <ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </ng-container>
+    </table>
+  </div>
+  <h5 *ngIf="pageData.length == 0" class="text-danger text-center mb-3 mt-3">No record found!</h5>
+  <div class="button-group back-button-group">
+    <button mat-raised-button color="accent" type="button" class="text-white" (click)="back()">Back to order list</button>
+  </div>
+</div>

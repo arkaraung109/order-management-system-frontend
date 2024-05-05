@@ -1,40 +1,40 @@
-.responsive-container .mat-column-no {
+.responsive-container .mat-column-nonSortIndex {
   width: 70px;
   max-width: 70px;
   word-wrap: break-word;
 }
 
-.responsive-container .mat-column-product {
+.responsive-container .mat-column-nonSortProduct {
   width: 200px;
   max-width: 200px;
   word-wrap: break-word;
 }
 
-.responsive-container .mat-column-category {
+.responsive-container .mat-column-nonSortCategory {
   width: 150px;
   max-width: 150px;
   word-wrap: break-word;
 }
 
-.responsive-container .mat-column-quantity {
+.responsive-container .mat-column-nonSortQuantity {
   width: 150px;
   max-width: 150px;
   word-wrap: break-word;
 }
 
-.responsive-container .mat-column-unitPrice {
+.responsive-container .mat-column-nonSortUnitPrice {
   width: 150px;
   max-width: 150px;
   word-wrap: break-word;
 }
 
-.responsive-container .mat-column-amount {
+.responsive-container .mat-column-nonSortAmount {
   width: 150px;
   max-width: 150px;
   word-wrap: break-word;
 }
 
-.responsive-container .mat-column-orderDetailsAction {
+.responsive-container .mat-column-nonSortOrderDetailsAction {
   width: 70px;
   max-width: 70px;
   word-wrap: break-word;
@@ -45,7 +45,7 @@
 }
 
 .row {
-  width: 610px !important;
+  width: 910px !important;
 }
 
 .input-form {

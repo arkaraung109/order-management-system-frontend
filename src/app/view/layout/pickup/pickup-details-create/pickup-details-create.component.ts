@@ -34,8 +34,8 @@ export class PickupDetailsCreateComponent implements OnInit {
   saved: boolean = false;
   dataSource: MatTableDataSource<OrderDetails> = new MatTableDataSource<OrderDetails>();
   cartDataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['select', 'no', 'orderId', 'customer', 'orderDate', 'product', 'category', 'quantity', 'pickupQuantity'];
-  displayedColumnsForCart: string[] = ['no', 'orderId', 'customer', 'orderDate', 'product', 'category', 'pickupQuantity'];
+  displayedColumns: string[] = ['select', 'nonSortIndex', 'nonSortProduct', 'nonSortQuantity', 'nonSortPickupQuantity'];
+  displayedColumnsForCart: string[] = ['nonSortIndex', 'nonSortProduct', 'nonSortPickupQuantity'];
   elementArray: any[] = [];
   allElementArray: any[] = [];
   pageData: any[] = [];

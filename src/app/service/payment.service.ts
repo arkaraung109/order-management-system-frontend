@@ -19,6 +19,10 @@ export class PaymentService {
     return this.http.get<Payment>(`${environment.baseUrl}/payment/findById?id=${id}`, { responseType: "json" });
   }
 
+  fetchByOrderId(orderId: string): Observable<Payment[]> {
+    return this.http.get<Payment[]>(`${environment.baseUrl}/payment/findByOrderId?orderId=${orderId}`, { responseType: "json" });
+  }
+
   fetchPage(customerName: string = "", startDate: string = "", endDate: string = "", paymentType: string = "", pageNo: number = 1, pageSize: number = 5): Observable<PaginationResponse<Payment>> {
     return this.http.get<PaginationResponse<Payment>>(`${environment.baseUrl}/payment/findPage?customerName=${customerName}&startDate=${startDate}&endDate=${endDate}&paymentType=${paymentType}&pageNo=${pageNo}&pageSize=${pageSize}`, { responseType: "json" });
   }

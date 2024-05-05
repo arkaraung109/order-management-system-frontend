@@ -12,6 +12,7 @@ import { CustomerComponent } from './customer/customer.component';
 import { DeliveryRouteComponent } from './delivery-route/delivery-route.component';
 import { PickupComponent } from './pickup/pickup.component';
 import { PaymentComponent } from './payment/payment.component';
+import { UnfulfilledOrderComponent } from './unfulfilled-order/unfulfilled-order.component';
 
 const routes: Routes = [
   {
@@ -82,6 +83,22 @@ const routes: Routes = [
         path: '',
         loadChildren: () => import('./order/order.module').then(m => m.OrderModule),
         data: { breadcrumb: 'order' }
+      }
+    ]
+  },
+  {
+    path: 'unfulfilled-order',
+    component: UnfulfilledOrderComponent,
+    children: [
+      {
+        path: '',
+        redirectTo: 'list',
+        pathMatch: 'full'
+      },
+      {
+        path: '',
+        loadChildren: () => import('./unfulfilled-order/unfulfilled-order.module').then(m => m.UnfulfilledOrderModule),
+        data: { breadcrumb: 'unfulfilled-order' }
       }
     ]
   },

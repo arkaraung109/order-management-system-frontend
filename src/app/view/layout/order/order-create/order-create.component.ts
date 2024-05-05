@@ -33,7 +33,7 @@ export class OrderCreateComponent implements OnInit {
   submitted: boolean = false;
   saved: boolean = false;
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['no', 'product', 'category', 'quantity', 'unitPrice', 'amount', 'orderDetailsAction'];
+  displayedColumns: string[] = ['nonSortIndex', 'nonSortProduct', 'nonSortCategory', 'nonSortQuantity', 'nonSortUnitPrice', 'nonSortAmount', 'nonSortOrderDetailsAction'];
   customerList: Customer[] = [];
   categoryList: Category[] = [];
   productList: Product[] = [];
@@ -67,7 +67,8 @@ export class OrderCreateComponent implements OnInit {
     this.saveForm = this.fb.group(
       {
         orderDate: ['', Validators.required],
-        customer: [null, Validators.required]
+        customer: [null, Validators.required],
+        remark: [null]
       }
     );
 
@@ -224,6 +225,7 @@ export class OrderCreateComponent implements OnInit {
         let requestDto: OrderCart = new OrderCart();
         requestDto.orderDate = format(this.saveForm.get('orderDate')!.value, "yyyy-MM-dd");
         requestDto.customer = this.saveForm.get('customer')!.value;
+        requestDto.remark = this.saveForm.get('remark')!.value;
         requestDto.amount = this.totalAmount;
         requestDto.orderCart = this.cart;
 
@@ -235,6 +237,7 @@ export class OrderCreateComponent implements OnInit {
 
             moreDialogRef.afterClosed().subscribe(result => {
               if (result) {
+                this.searchText = "";
                 this.resetSubmitForm();
                 this.resetSaveForm();
               } else {

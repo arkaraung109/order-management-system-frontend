@@ -1,0 +1,34 @@
+<div style="width: 90%; margin: 0 auto;">
+  <div *ngFor="let order of orderList">
+    <h5 class="table-header">Order ID: {{ order.id }}</h5>
+    <h5 class="table-header">Order Date: {{ order.orderDate }}</h5>
+    <h5 class="table-header">Customer: {{ order.customer.name }}</h5>
+    <div class="container-fluid mat-elevation-z8 responsive-container">
+      <table mat-table [dataSource]="order.dataSource" matSort class="unfulfilled-order-list-table w-100">
+        <ng-container matColumnDef="nonSortIndex">
+          <th mat-header-cell *matHeaderCellDef>No.</th>
+          <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+        </ng-container>
+        <ng-container matColumnDef="nonSortProduct">
+          <th mat-header-cell *matHeaderCellDef>Product</th>
+          <td mat-cell *matCellDef="let element">{{ element.product?.name }}</td>
+        </ng-container>
+        <ng-container matColumnDef="nonSortQuantity">
+          <th mat-header-cell *matHeaderCellDef>Quantity</th>
+          <td mat-cell *matCellDef="let element">{{ (element.orderedQuantity - element.fulfilledQuantity) | number }}</td>
+        </ng-container>
+        <ng-container matColumnDef="nonSortSellingPrice">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Selling Price</th>
+          <td mat-cell *matCellDef="let element">{{ (element.sellingPrice) | number }}</td>
+        </ng-container>
+        <ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns;"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </ng-container>
+      </table>
+    </div>
+    <h5 *ngIf="order.orderDetailsCount == 0" class="text-danger text-center mb-3 mt-3">No record found!</h5>
+    <div style="margin-bottom: 100px"></div>
+  </div>
+  <h5 *ngIf="orderList.length == 0" class="text-danger text-center">No record found!</h5>
+</div>

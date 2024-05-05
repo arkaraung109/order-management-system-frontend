@@ -31,7 +31,7 @@ export class MenuService {
             icon: "list",
             title: "View List",
             allowedUserRoles: [UserRole.ADMIN, UserRole.DELIVERY_MANAGER, UserRole.SALES_STAFF]
-          },
+          }
         ]
       },
       {
@@ -49,8 +49,7 @@ export class MenuService {
             icon: "list",
             title: "View List",
             allowedUserRoles: [UserRole.ADMIN, UserRole.DELIVERY_MANAGER, UserRole.SALES_STAFF]
-          },
-
+          }
         ]
       },
       {
@@ -68,8 +67,19 @@ export class MenuService {
             icon: "list",
             title: "View List",
             allowedUserRoles: [UserRole.ADMIN, UserRole.DELIVERY_MANAGER, UserRole.SALES_STAFF]
-          },
-
+          }
+        ]
+      },
+      {
+        icon: "shopping_cart",
+        title: "Unfulfilled Order",
+        subMenu: [
+          {
+            url: "/app/unfulfilled-order/list",
+            icon: "list",
+            title: "View List",
+            allowedUserRoles: [UserRole.ADMIN, UserRole.DELIVERY_MANAGER, UserRole.SALES_STAFF]
+          }
         ]
       },
       {
@@ -87,8 +97,7 @@ export class MenuService {
             icon: "list",
             title: "View List",
             allowedUserRoles: [UserRole.ADMIN, UserRole.DELIVERY_MANAGER]
-          },
-
+          }
         ]
       },
       {
@@ -106,8 +115,7 @@ export class MenuService {
             icon: "list",
             title: "View List",
             allowedUserRoles: [UserRole.ADMIN, UserRole.DELIVERY_MANAGER]
-          },
-
+          }
         ]
       },
       {
@@ -125,8 +133,7 @@ export class MenuService {
             icon: "list",
             title: "View List",
             allowedUserRoles: [UserRole.ADMIN, UserRole.SALES_STAFF]
-          },
-
+          }
         ]
       },
       {
@@ -144,8 +151,7 @@ export class MenuService {
             icon: "list",
             title: "View List",
             allowedUserRoles: [UserRole.ADMIN, UserRole.DELIVERY_MANAGER, UserRole.SALES_STAFF]
-          },
-
+          }
         ]
       },
       {
@@ -163,8 +169,7 @@ export class MenuService {
             icon: "list",
             title: "View List",
             allowedUserRoles: [UserRole.ADMIN, UserRole.DELIVERY_MANAGER]
-          },
-
+          }
         ]
       },
       {
@@ -182,8 +187,7 @@ export class MenuService {
             icon: "list",
             title: "View List",
             allowedUserRoles: [UserRole.ADMIN]
-          },
-
+          }
         ]
       }
     ];

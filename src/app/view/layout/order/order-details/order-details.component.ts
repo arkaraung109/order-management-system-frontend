@@ -8,7 +8,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ToastrService } from 'ngx-toastr';
 import { HttpResponse } from 'src/app/common/HttpResponse';
-import { UserRole } from 'src/app/common/UserRole';
 import { Category } from 'src/app/model/Category';
 import { Order } from 'src/app/model/Order';
 import { OrderDetails } from 'src/app/model/OrderDetails';
@@ -116,7 +115,9 @@ export class OrderDetailsComponent implements OnInit {
             case 'orderedQuantity': return element.orderedQuantity;
             case 'fulfilledQuantity': return element.fulfilledQuantity;
             case 'sellingPrice': return element.sellingPrice;
+            case 'manufacturingCost': return element.manufacturingCost;
             case 'amount': return element.amount;
+            case 'profit': return element.profit;
             default: return 0;
           }
         };
