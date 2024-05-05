@@ -34,7 +34,7 @@ export class OrderDetailsComponent implements OnInit {
   jwtHelperService = new JwtHelperService();
   loginRole: any;
   dataSource: MatTableDataSource<OrderDetails> = new MatTableDataSource<OrderDetails>();
-  displayedColumnsForAdmin: string[] = ['index', 'product', 'category', 'fulfilmentStatus', 'orderedQuantity', 'fulfilledQuantity', 'sellingPrice', 'manufacturingCost', 'amount', 'profit', 'fulfilmentHistory', 'action'];
+  displayedColumnsForAdmin: string[] = ['index', 'product', 'category', 'fulfilmentStatus', 'orderedQuantity', 'fulfilledQuantity', 'sellingPrice', 'manufacturingCost', 'amount', 'fulfilmentHistory', 'action'];
   displayedColumnsForSalesStaff: string[] = ['index', 'product', 'category', 'fulfilmentStatus', 'orderedQuantity', 'fulfilledQuantity', 'sellingPrice', 'amount', 'fulfilmentHistory', 'action'];
   displayedColumnsForDeliveryManager: string[] = ['index', 'product', 'category', 'fulfilmentStatus', 'orderedQuantity', 'fulfilledQuantity', 'sellingPrice', 'amount', 'fulfilmentHistory'];
   pageData: any[] = [];
@@ -117,7 +117,6 @@ export class OrderDetailsComponent implements OnInit {
             case 'sellingPrice': return element.sellingPrice;
             case 'manufacturingCost': return element.manufacturingCost;
             case 'amount': return element.amount;
-            case 'profit': return element.profit;
             default: return 0;
           }
         };

@@ -98,10 +98,6 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
         <td mat-cell *matCellDef="let element">{{ (element.amount) | number }}</td>
       </ng-container>
-      <ng-container matColumnDef="profit">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Profit</th>
-        <td mat-cell *matCellDef="let element">{{ (element.profit) | number }}</td>
-      </ng-container>
       <ng-container matColumnDef="fulfilmentHistory">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>View Fulfilment History</th>
         <td mat-cell *matCellDef="let element">

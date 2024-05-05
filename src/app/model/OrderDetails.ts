@@ -8,7 +8,6 @@ export class OrderDetails {
   sellingPrice!: number;
   manufacturingCost!: number;
   amount!: number;
-  profit!: number;
   fulfilmentStatus!: string;
   order: Order = new Order();
   product: Product = new Product();

@@ -56,12 +56,6 @@
   word-wrap: break-word;
 }
 
-.responsive-container .mat-column-profit .mat-sort-header-container {
-  width: 150px;
-  max-width: 150px;
-  word-wrap: break-word;
-}
-
 .responsive-container .mat-column-user .mat-sort-header-container {
   width: 200px;
   max-width: 200px;
@@ -87,7 +81,7 @@
 }
 
 .order-list-table {
-  min-width: 2150px !important;
+  min-width: 2000px !important;
 }
 
 .mdc-text-field--filled:not(.mdc-text-field--disabled) {

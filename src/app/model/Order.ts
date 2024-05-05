@@ -6,7 +6,6 @@ export class Order {
   orderDate!: string;
   orderedAmount!: number;
   paidAmount!: number;
-  profit!: number;
   remark!: string;
   fulfilmentStatus!: string;
   paymentStatus!: string;

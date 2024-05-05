@@ -30,7 +30,7 @@ export class OrderListComponent implements OnInit {
   jwtHelperService = new JwtHelperService();
   loginRole: any;
   dataSource: MatTableDataSource<Order> = new MatTableDataSource<Order>();
-  displayedColumnsForAdmin: string[] = ['index', 'id', 'orderDate', 'customer', 'fulfilmentStatus', 'paymentStatus', 'orderedAmount', 'paidAmount', 'remainingAmount', 'profit', 'user', 'orderDetails', 'paymentHistory', 'action'];
+  displayedColumnsForAdmin: string[] = ['index', 'id', 'orderDate', 'customer', 'fulfilmentStatus', 'paymentStatus', 'orderedAmount', 'paidAmount', 'remainingAmount', 'user', 'orderDetails', 'paymentHistory', 'action'];
   displayedColumnsForSalesStaff: string[] = ['index', 'id', 'orderDate', 'customer', 'fulfilmentStatus', 'paymentStatus', 'orderedAmount', 'paidAmount', 'remainingAmount', 'user', 'orderDetails', 'paymentHistory', 'action'];
   displayedColumnsForDeliveryManager: string[] = ['index', 'id', 'orderDate', 'customer', 'fulfilmentStatus', 'paymentStatus', 'orderedAmount', 'paidAmount', 'remainingAmount', 'user', 'orderDetails'];
   pageData: any[] = [];
@@ -141,7 +141,6 @@ export class OrderListComponent implements OnInit {
           case 'orderedAmount': return element.orderedAmount;
           case 'paidAmount': return element.paidAmount;
           case 'remainingAmount': return element.orderedAmount - element.paidAmount;
-          case 'profit': return element.profit;
           case 'user': return element.user?.name;
           default: return 0;
         }
