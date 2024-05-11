@@ -20,8 +20,8 @@ export class PickupService {
     return this.http.get<Pickup>(`${environment.baseUrl}/pickup/findById?id=${id}`, { responseType: "json" });
   }
 
-  fetchPage(startDate: string = "", endDate: string = "", pageNo: number = 1, pageSize: number = 5): Observable<PaginationResponse<Pickup>> {
-    return this.http.get<PaginationResponse<Pickup>>(`${environment.baseUrl}/pickup/findPage?startDate=${startDate}&endDate=${endDate}&pageNo=${pageNo}&pageSize=${pageSize}`, { responseType: "json" });
+  fetchPage(customerName: string = "", startDate: string = "", endDate: string = "", pageNo: number = 1, pageSize: number = 5): Observable<PaginationResponse<Pickup>> {
+    return this.http.get<PaginationResponse<Pickup>>(`${environment.baseUrl}/pickup/findPage?customerName=${customerName}&startDate=${startDate}&endDate=${endDate}&pageNo=${pageNo}&pageSize=${pageSize}`, { responseType: "json" });
   }
 
   create(requestDto: PickupCart): Observable<HttpResponse> {

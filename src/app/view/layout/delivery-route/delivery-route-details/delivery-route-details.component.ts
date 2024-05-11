@@ -29,7 +29,7 @@ export class DeliveryRouteDetailsComponent implements OnInit {
   submitted: boolean = false;
   @ViewChild(MatSort) sort!: MatSort;
   dataSource: MatTableDataSource<DeliveryRouteDetails> = new MatTableDataSource<DeliveryRouteDetails>();
-  displayedColumns: string[] = ['index', 'orderId', 'customer', 'orderDate', 'product', 'category', 'deliveredQuantity', 'shippingAddress', 'action'];
+  displayedColumns: string[] = ['index', 'orderId', 'customer', 'orderDate', 'product', 'deliveredQuantity', 'shippingAddress', 'action'];
   pageData: any[] = [];
   shippingAddressList: ShippingAddress[] = [];
   deliveryRouteId: string = "";
@@ -99,7 +99,6 @@ export class DeliveryRouteDetailsComponent implements OnInit {
             case 'customer': return element.orderDetails?.order?.customer?.name;
             case 'orderDate': return element.orderDetails?.order?.orderDate;
             case 'product': return element.orderDetails?.product?.name;
-            case 'category': return element.orderDetails?.product?.category?.name;
             case 'deliveredQuantity': return element.deliveredQuantity;
             case 'shippingAddress': return element.shippingAddress?.address;
             default: return 0;

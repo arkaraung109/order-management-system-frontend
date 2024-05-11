@@ -28,12 +28,6 @@
   word-wrap: break-word;
 }
 
-.responsive-container .mat-column-category .mat-sort-header-container {
-  width: 150px;
-  max-width: 150px;
-  word-wrap: break-word;
-}
-
 .responsive-container .mat-column-deliveredQuantity .mat-sort-header-container {
   width: 250px;
   max-width: 250px;
@@ -53,7 +47,7 @@
 }
 
 .delivery-route-details-table {
-  min-width: 1600px !important;
+  min-width: 1450px !important;
 }
 
 .input-form {

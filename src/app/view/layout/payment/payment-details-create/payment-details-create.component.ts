@@ -87,7 +87,24 @@ export class PaymentDetailsCreateComponent implements OnInit {
 
         this.paymentService.create(requestDto).subscribe({
           next: (response: HttpResponse) => {
-            this.router.navigate(['/app/payment']);
+            const moreDialogRef = this.matDialog.open(ConfirmDialogComponent, {
+              width: '300px', data: 'create more'
+            });
+
+            moreDialogRef.afterClosed().subscribe(result => {
+              localStorage.removeItem("pageIndex");
+              localStorage.removeItem("pageSize");
+              localStorage.removeItem("customerName");
+              localStorage.removeItem("startDate");
+              localStorage.removeItem("endDate");
+
+              if (result) {
+                this.back();
+              } else {
+                this.router.navigate(['/app/payment']);
+              }
+            });
+
             this.toastrService.success(response.message, response.title);
           },
           error: (error) => {

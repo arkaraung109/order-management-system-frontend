@@ -5,6 +5,11 @@
         <h4 class="text-header">Pickup Update</h4>
       </div>
       <div class="p-4">
+        <h6><b>Pickup ID: {{ pickupDto.id }}</b></h6>
+        <h6><b>OrderID: {{ pickupDto.order.id }}</b></h6>
+        <h6><b>OrderDate: {{ pickupDto.order.orderDate }}</b></h6>
+        <h6><b>Customer: {{ pickupDto.order.customer.name }}</b></h6>
+        <br>
         <!-- Pickup Date -->
         <mat-form-field appearance="outline">
           <mat-label>Pickup Date</mat-label>

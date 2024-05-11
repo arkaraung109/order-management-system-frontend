@@ -61,10 +61,6 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Product</th>
         <td mat-cell *matCellDef="let element">{{ element.orderDetails?.product?.name }}</td>
       </ng-container>
-      <ng-container matColumnDef="category">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
-        <td mat-cell *matCellDef="let element">{{ element.orderDetails?.product?.category?.name }}</td>
-      </ng-container>
       <ng-container matColumnDef="deliveredQuantity">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Delivered Quantity</th>
         <td mat-cell *matCellDef="let element">{{ element.deliveredQuantity }}</td>

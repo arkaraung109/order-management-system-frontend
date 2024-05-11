@@ -27,7 +27,7 @@ export class PickupDetailsComponent implements OnInit {
   submitted: boolean = false;
   @ViewChild(MatSort) sort!: MatSort;
   dataSource: MatTableDataSource<PickupDetails> = new MatTableDataSource<PickupDetails>();
-  displayedColumns: string[] = ['index', 'orderId', 'customer', 'orderDate', 'product', 'category', 'pickupQuantity', 'action'];
+  displayedColumns: string[] = ['index', 'product', 'pickupQuantity', 'action'];
   pageData: any[] = [];
   pickupId: string = "";
   pickupDto: Pickup = new Pickup();
@@ -86,11 +86,7 @@ export class PickupDetailsComponent implements OnInit {
         this.dataSource.sortingDataAccessor = (element: any, property) => {
           switch (property) {
             case 'index': return element.index;
-            case 'orderId': return element.orderDetails?.order?.id;
-            case 'customer': return element.orderDetails?.order?.customer?.name;
-            case 'orderDate': return element.orderDetails?.order?.orderDate;
             case 'product': return element.orderDetails?.product?.name;
-            case 'category': return element.orderDetails?.product?.category?.name;
             case 'pickupQuantity': return element.pickupQuantity;
             default: return 0;
           }

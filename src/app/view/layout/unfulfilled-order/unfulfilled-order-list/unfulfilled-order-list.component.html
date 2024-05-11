@@ -3,6 +3,7 @@
     <h5 class="table-header">Order ID: {{ order.id }}</h5>
     <h5 class="table-header">Order Date: {{ order.orderDate }}</h5>
     <h5 class="table-header">Customer: {{ order.customer.name }}</h5>
+    <h5 class="table-header" *ngIf="order.remark">Remark: {{ order.remark }}</h5>
     <div class="container-fluid mat-elevation-z8 responsive-container">
       <table mat-table [dataSource]="order.dataSource" matSort class="unfulfilled-order-list-table w-100">
         <ng-container matColumnDef="nonSortIndex">

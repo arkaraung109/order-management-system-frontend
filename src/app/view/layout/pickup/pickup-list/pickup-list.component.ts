@@ -9,7 +9,9 @@ import { format } from 'date-fns';
 import { ToastrService } from 'ngx-toastr';
 import { catchError, map, startWith, switchMap } from 'rxjs';
 import { HttpResponse } from 'src/app/common/HttpResponse';
+import { Customer } from 'src/app/model/Customer';
 import { Pickup } from 'src/app/model/Pickup';
+import { CustomerService } from 'src/app/service/customer.service';
 import { PickupService } from 'src/app/service/pickup.service';
 import { ConfirmDialogComponent } from 'src/app/view/share/confirm-dialog/confirm-dialog.component';
 
@@ -24,33 +26,41 @@ export class PickupListComponent implements OnInit {
   @ViewChild('paginator') paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   dataSource: MatTableDataSource<Pickup> = new MatTableDataSource<Pickup>();
-  displayedColumns: string[] = ['index', 'id', 'pickupDate', 'pickupDetails', 'action'];
+  displayedColumns: string[] = ['index', 'id', 'customer', 'pickupDate', 'pickupDetails', 'action'];
   pageData: any[] = [];
   pageSizes = [5, 10, 15];
   totalElements: number = 0;
+  customerList: Customer[] = [];
+  searchedCustomerName: string = "";
   searchedStartDate: string = "";
   searchedEndDate: string = "";
   pageIndex!: string;
   pageSize!: string;
+  customerName!: string;
   startDate!: string;
   endDate!: string;
   isBacked: boolean = false;
+  searchText: string = "";
 
   constructor(
     private changeDetector: ChangeDetectorRef,
     private router: Router,
     private matDialog: MatDialog,
     private toastrService: ToastrService,
+    private customerService: CustomerService,
     private pickupService: PickupService
   ) { }
 
   ngOnInit(): void {
-
+    this.customerService.fetchAll().subscribe(data => {
+      this.customerList = data;
+    });
   }
 
   ngAfterViewInit() {
     this.pageIndex = localStorage.getItem("pageIndex")!;
     this.pageSize = localStorage.getItem("pageSize")!;
+    this.customerName = localStorage.getItem("customerName")!;
     this.startDate = localStorage.getItem("startDate")!;
     this.endDate = localStorage.getItem("endDate")!;
     if (this.pageIndex != null) {
@@ -58,11 +68,13 @@ export class PickupListComponent implements OnInit {
     }
     localStorage.removeItem("pageIndex");
     localStorage.removeItem("pageSize");
+    localStorage.removeItem("customerName");
     localStorage.removeItem("startDate");
     localStorage.removeItem("endDate");
 
     this.paginator.pageIndex = this.pageIndex == null ? this.paginator.pageIndex : this.pageIndex;
     this.paginator.pageSize = this.pageSize == null ? this.paginator.pageSize : this.pageSize;
+    this.searchedCustomerName = this.customerName == null ? "" : this.customerName;
     this.searchedStartDate = this.startDate == null ? "" : this.startDate;
     this.searchedEndDate = this.endDate == null ? "" : this.endDate;
     this.changeDetector.detectChanges();
@@ -75,7 +87,7 @@ export class PickupListComponent implements OnInit {
     this.paginator.page.pipe(
       startWith({}),
       switchMap(() => {
-        return this.pickupService.fetchPage(this.searchedStartDate, this.searchedEndDate, this.paginator.pageIndex + 1, this.paginator.pageSize)
+        return this.pickupService.fetchPage(this.searchedCustomerName, this.searchedStartDate, this.searchedEndDate, this.paginator.pageIndex + 1, this.paginator.pageSize)
           .pipe(catchError(() => {
             throw new Error("Error");
           }));
@@ -98,6 +110,15 @@ export class PickupListComponent implements OnInit {
       });
       this.dataSource = new MatTableDataSource(this.pageData);
       this.dataSource.sort = this.sort;
+      this.dataSource.sortingDataAccessor = (element: any, property) => {
+        switch (property) {
+          case 'index': return element.index;
+          case 'id': return element.id;
+          case 'customer': return element.order?.customer?.name;
+          case 'pickupDate': return element.pickupDate;
+          default: return 0;
+        }
+      };
     });
   }
 
@@ -123,6 +144,7 @@ export class PickupListComponent implements OnInit {
       next: (response: Pickup) => {
         localStorage.setItem("pageIndex", this.paginator.pageIndex.toString());
         localStorage.setItem("pageSize", this.paginator.pageSize.toString());
+        localStorage.setItem("customerName", this.searchedCustomerName);
         localStorage.setItem("startDate", this.searchedStartDate);
         localStorage.setItem("endDate", this.searchedEndDate);
         this.router.navigate(
@@ -175,6 +197,7 @@ export class PickupListComponent implements OnInit {
       next: (response: Pickup) => {
         localStorage.setItem("pageIndex", this.paginator.pageIndex.toString());
         localStorage.setItem("pageSize", this.paginator.pageSize.toString());
+        localStorage.setItem("customerName", this.searchedCustomerName);
         localStorage.setItem("startDate", this.searchedStartDate);
         localStorage.setItem("endDate", this.searchedEndDate);
         this.router.navigate(

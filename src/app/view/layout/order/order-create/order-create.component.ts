@@ -148,7 +148,7 @@ export class OrderCreateComponent implements OnInit {
 
     let found = false;
     for (let i = 0; i < this.cart.length; i++) {
-      if (this.cart[i].product.id == updatedCartItem.product.id && this.cart[i].unitPrice == updatedCartItem.unitPrice) {
+      if (i != this.cartItemIndex && this.cart[i].product.id == updatedCartItem.product.id && this.cart[i].unitPrice == updatedCartItem.unitPrice) {
         found = true;
         this.cart[i].quantity = Number(this.cart[i].quantity) + Number(updatedCartItem.quantity);
         this.cart[i].amount = this.cart[i].quantity * this.cart[i].unitPrice;

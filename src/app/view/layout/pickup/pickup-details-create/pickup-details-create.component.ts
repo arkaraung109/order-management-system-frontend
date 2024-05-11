@@ -229,6 +229,7 @@ export class PickupDetailsCreateComponent implements OnInit {
       if (result) {
         let requestDto: PickupCart = new PickupCart();
         requestDto.pickupDate = format(this.saveForm.get('pickupDate')!.value, "yyyy-MM-dd");
+        requestDto.order = this.orderDto;
         requestDto.pickupCart = [];
 
         for (let i = 0; i < this.cartData.length; i++) {
@@ -240,7 +241,24 @@ export class PickupDetailsCreateComponent implements OnInit {
 
         this.pickupService.create(requestDto).subscribe({
           next: (response: HttpResponse) => {
-            this.back();
+            const moreDialogRef = this.matDialog.open(ConfirmDialogComponent, {
+              width: '300px', data: 'create more'
+            });
+
+            moreDialogRef.afterClosed().subscribe(result => {
+              localStorage.removeItem("pageIndex");
+              localStorage.removeItem("pageSize");
+              localStorage.removeItem("customerName");
+              localStorage.removeItem("startDate");
+              localStorage.removeItem("endDate");
+
+              if (result) {
+                this.back();
+              } else {
+                this.router.navigate(['/app/pickup']);
+              }
+            });
+
             this.toastrService.success(response.message, response.title);
           },
           error: (error) => {

@@ -1,4 +1,15 @@
 <div style="width: 90%; margin: 0 auto;">
+  <!-- Search by customer -->
+  <mat-form-field appearance="outline" style="width: 300px; margin-top: 10px; margin-right: 15px;">
+    <mat-label>Search by customer</mat-label>
+    <mat-select [(ngModel)]="searchedCustomerName" (selectionChange)="search()">
+      <mat-form-field>
+        <input type="text" matInput [(ngModel)]="searchText" [ngModelOptions]="{ standalone: true }" placeholder="Search..."/>
+      </mat-form-field>
+      <mat-option [value]="''">All Customers</mat-option>
+      <mat-option *ngFor="let customer of customerList | search : searchText" [value]="customer.name">{{ customer.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
   <!-- Search by order date -->
   <mat-form-field appearance="outline" style="width: 300px; margin-top: 10px; margin-right: 15px;">
     <mat-label>Search by order date</mat-label>
@@ -21,6 +32,10 @@
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Pickup ID</th>
         <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
+      <ng-container matColumnDef="customer">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Customer</th>
+        <td mat-cell *matCellDef="let element">{{ element.order?.customer?.name }}</td>
       </ng-container>
       <ng-container matColumnDef="pickupDate">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Pickup Date</th>
