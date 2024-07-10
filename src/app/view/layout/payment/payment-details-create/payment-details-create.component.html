@@ -10,7 +10,7 @@
         <h6><b>Customer: {{ orderDto.customer.name }}</b></h6>
         <h6><b>Ordered Amount: {{ orderDto.orderedAmount | number }} kyat<span *ngIf="orderDto.orderedAmount > 1">s</span></b></h6>
         <h6><b>Paid Amount: {{ orderDto.paidAmount | number }} kyat<span *ngIf="orderDto.paidAmount > 1">s</span></b></h6>
-        <h6><b>Remaining Amount: {{ remainingAmount | number }} kyat<span *ngIf="remainingAmount > 1">s</span></b></h6>
+        <h6><b>Remaining Amount: {{ orderDto.orderedAmount - orderDto.paidAmount | number }} kyat<span *ngIf="orderDto.orderedAmount - orderDto.paidAmount > 1">s</span></b></h6>
         <br>
         <!-- Amount -->
         <mat-form-field appearance="outline">

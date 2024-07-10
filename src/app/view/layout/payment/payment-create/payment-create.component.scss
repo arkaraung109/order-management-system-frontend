@@ -26,6 +26,24 @@
     word-wrap: break-word;
   }
 
+  .responsive-container .mat-column-orderedAmount .mat-sort-header-container {
+    width: 150px;
+    max-width: 150px;
+    word-wrap: break-word;
+  }
+
+  .responsive-container .mat-column-paidAmount .mat-sort-header-container {
+    width: 150px;
+    max-width: 150px;
+    word-wrap: break-word;
+  }
+
+  .responsive-container .mat-column-remainingAmount .mat-sort-header-container {
+    width: 150px;
+    max-width: 150px;
+    word-wrap: break-word;
+  }
+
   .responsive-container .mat-column-createPayment .mat-sort-header-container {
     width: 150px;
     max-width: 150px;
@@ -33,7 +51,7 @@
   }
 
   .payment-create-table {
-    min-width: 800px !important;
+    min-width: 1250px !important;
   }
 
   .mdc-text-field--filled:not(.mdc-text-field--disabled) {

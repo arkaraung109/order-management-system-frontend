@@ -23,7 +23,7 @@ export class PaymentCreateComponent implements OnInit {
   @ViewChild('paginator') paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   dataSource: MatTableDataSource<Order> = new MatTableDataSource<Order>();
-  displayedColumns: string[] = ['index', 'id', 'orderDate', 'customer', 'createPayment'];
+  displayedColumns: string[] = ['index', 'id', 'orderDate', 'customer', 'orderedAmount', 'paidAmount', 'remainingAmount', 'createPayment'];
   pageData: any[] = [];
   pageSizes = [5, 10, 15];
   totalElements: number = 0;
@@ -112,6 +112,9 @@ export class PaymentCreateComponent implements OnInit {
           case 'id': return element.id;
           case 'orderDate': return element.orderDate;
           case 'customer': return element.customer?.name;
+          case 'orderedAmount': return element.orderedAmount;
+          case 'paidAmount': return element.paidAmount;
+          case 'remainingAmount': return element.orderedAmount - element.paidAmount;
           default: return 0;
         }
       };
